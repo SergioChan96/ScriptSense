@@ -23,7 +23,41 @@ class _Settings extends State<Settings> {
             )
           ];
         },
-        body: ListView()
+        body: Column(
+          children: [
+            Text("Generelle Einstellungen"),
+            Card(
+              child: Column(
+                children: [
+                  TextButton(
+                      onPressed: () {
+                        
+                      }, 
+                      child: Row(
+                        children: [
+                          Text("Weiter Einstellungen"),
+                          Spacer(),
+                          Icon(Icons.arrow_forward_ios)
+                        ],
+                      )
+                  ),
+                  TextButton(
+                      onPressed: () {
+
+                      },
+                      child: Row(
+                        children: [
+                          Text("Weiter Einstellungen"),
+                          Spacer(),
+                          Icon(Icons.arrow_forward_ios)
+                        ],
+                      )
+                  ),
+                ],
+              ),
+            ),
+          ],
+        )
       ),
       bottomNavigationBar: BottomNavBar(
         currentIndex: 3, context: context,

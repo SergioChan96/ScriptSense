@@ -2,6 +2,8 @@ import 'package:chinese_ocr/history_page.dart';
 import 'package:chinese_ocr/main.dart';
 import 'package:flutter/material.dart';
 
+import '../settings_page.dart';
+
 class BottomNavBar extends NavigationBar{
   static const Color color = Colors.redAccent;
   int currentIndex;
