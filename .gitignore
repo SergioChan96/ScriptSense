@@ -42,3 +42,5 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 pubspec.lock
+assets/Source Han Serif CN Heavy.otf
+assets/SourceHanSerifSC-Bold.otf
