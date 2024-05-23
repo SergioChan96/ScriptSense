@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:opencv_dart/opencv_dart.dart';
 
 class Evaluate extends StatefulWidget {
+  const Evaluate({super.key});
+
   @override
   State<Evaluate> createState() => _Evaluate();
 }
@@ -28,7 +30,7 @@ class _Evaluate extends State<Evaluate> {
                     print("update");
                   });
                 },
-                child: Text("Refresh"),
+                child: const Text("Refresh"),
               ),
             );
           }
@@ -41,7 +43,7 @@ class _Evaluate extends State<Evaluate> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Results"),
+        title: const Text("Results"),
       ),
       body: FutureBuilder<List<Mat>>(
         future: seg.segmentImage(),
@@ -56,7 +58,7 @@ class _Evaluate extends State<Evaluate> {
                     print("update");
                   });
                 },
-                child: Text("Refresh"),
+                child: const Text("Refresh"),
               ),
             );
           }
@@ -67,7 +69,7 @@ class _Evaluate extends State<Evaluate> {
                 child: Row(
                   children: [
                     Image.memory(imencode(ImageFormat.jpg.ext, projectSnap.data![index])),
-                    Divider(),
+                    const Divider(),
                     getText(projectSnap.data![index])
                   ],
                 )

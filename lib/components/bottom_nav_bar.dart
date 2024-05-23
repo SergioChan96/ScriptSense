@@ -1,30 +1,32 @@
-import 'package:chinese_ocr/history_page.dart';
-import 'package:chinese_ocr/main.dart';
 import 'package:flutter/material.dart';
 
+import 'package:chinese_ocr/history_page.dart';
+import 'package:chinese_ocr/translation_page.dart';
+import 'package:chinese_ocr/main.dart';
 import '../settings_page.dart';
 
 class BottomNavBar extends NavigationBar{
   static const Color color = Colors.redAccent;
-  int currentIndex;
-  BottomNavBar({required this.currentIndex, required BuildContext context}):
+  final int currentIndex;
+
+  BottomNavBar({super.key, required this.currentIndex, required BuildContext context}):
         super(
     destinations: [
-      NavigationDestination(
+      const NavigationDestination(
           icon: Icon(Icons.camera_alt, color: color,),
           label: "Home"
       ),
-      NavigationDestination(
+      const NavigationDestination(
           icon: Icon(Icons.history, color: color,),
           label: "Historie"
       ),
-      NavigationDestination(
+      const NavigationDestination(
           icon: Icon(Icons.translate, color: color,),
-          label: "Uebersetzung"
+          label: "Übersetzung"
       ),
-      NavigationDestination(
+      const NavigationDestination(
           icon: Icon(Icons.settings, color: color,),
-          label: "Settings"
+          label: "Einstellungen"
       ),
     ],
     onDestinationSelected: (int index) {
@@ -35,22 +37,22 @@ class BottomNavBar extends NavigationBar{
         case 0:
           Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => ScriptSensePage(title: 'Home')));
+              MaterialPageRoute(builder: (context) => const ScriptSensePage(title: 'Home')));
           break;
         case 1:
           Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => History()));
+              MaterialPageRoute(builder: (context) => const History()));
           break;
         case 2:
           Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => ScriptSensePage(title: 'Uebersetzer')));
+              MaterialPageRoute(builder: (context) => const Translation()));
           break;
         case 3:
           Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => Settings()));
+              MaterialPageRoute(builder: (context) => const Settings()));
           break;
       }
     },

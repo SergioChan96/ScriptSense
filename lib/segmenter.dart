@@ -1,6 +1,4 @@
 import 'dart:ffi' as ffi;
-import 'dart:isolate';
-import 'package:chinese_ocr/match_char.dart';
 import 'package:flutter/services.dart';
 import 'package:opencv_dart/opencv_dart.dart';
 
