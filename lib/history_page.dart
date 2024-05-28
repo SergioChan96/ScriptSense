@@ -77,10 +77,10 @@ class _History extends State<History> {
           ),
         ),
       ),
-        bottomNavigationBar: BottomNavBar(
-          currentIndex: 1,
-          context: context
-        )
+      bottomNavigationBar: BottomNavBar(
+        selectedIndex: 1,
+        context: context
+      ),
     );
   }
 }

@@ -4,12 +4,11 @@ import 'package:chinese_ocr/history_page.dart';
 import 'package:chinese_ocr/translation_page.dart';
 import 'package:chinese_ocr/main.dart';
 import '../settings_page.dart';
+import '../translation_page.dart';
 
 class BottomNavBar extends NavigationBar{
   static const Color color = Colors.redAccent;
-  final int currentIndex;
-
-  BottomNavBar({super.key, required this.currentIndex, required BuildContext context}):
+  BottomNavBar({required super.selectedIndex, required BuildContext context}):
         super(
     destinations: [
       const NavigationDestination(
@@ -30,7 +29,7 @@ class BottomNavBar extends NavigationBar{
       ),
     ],
     onDestinationSelected: (int index) {
-      if (index == currentIndex) {
+      if (index == selectedIndex) {
         return;
       }
       switch(index) {

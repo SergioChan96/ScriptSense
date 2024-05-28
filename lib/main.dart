@@ -52,7 +52,7 @@ class _ScriptSensePage extends State<ScriptSensePage> {
         ),
       ),
       bottomNavigationBar: BottomNavBar(
-        currentIndex: 0,
+        selectedIndex: 0,
         context: context,
       ),
     );

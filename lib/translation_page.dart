@@ -112,8 +112,7 @@ class _Translation extends State<Translation> {
         ),
       ),
       bottomNavigationBar: BottomNavBar(
-        currentIndex: 2,
-        context: context,
+        selectedIndex: 3, context: context,
       ),
     );
   }

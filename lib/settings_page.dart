@@ -21,9 +21,7 @@ class _Settings extends State<Settings> {
                 expandedHeight: 0.0,
                 floating: false,
                 pinned: true,
-                //flexibleSpace: FlexibleSpaceBar(
-                 // title: Text('Settings'),
-                //)
+                title: Text("Settings"),
             )
           ];
         },
@@ -118,7 +116,7 @@ class _Settings extends State<Settings> {
         ),
       ),
       bottomNavigationBar: BottomNavBar(
-        currentIndex: 3, context: context,
+        selectedIndex: 3, context: context,
       ),
     );
   }
