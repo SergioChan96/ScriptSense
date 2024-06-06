@@ -1,4 +1,4 @@
-import 'package:chinese_ocr/evaluate.dart';
+import 'package:scriptsense/evaluate.dart';
 import 'package:flutter/material.dart';
 import 'components/bottom_nav_bar.dart';
 import 'components/header.dart';

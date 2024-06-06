@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 
-import 'package:chinese_ocr/Segmenter.dart';
+import 'package:scriptsense/Segmenter.dart';
 import 'package:flutter/material.dart';
 import 'package:opencv_dart/opencv_dart.dart';
 
@@ -23,17 +23,16 @@ class _Evaluate extends State<Evaluate> {
               ConnectionState.waiting ||
               !projectSnap2.hasData) {
             //print('project snapshot data is: ${projectSnap.data}');
-            return Card(
-              child: ElevatedButton(
+            return ElevatedButton(
                 onPressed: () {
                   setState(() {
                     print("update");
                   });
                 },
                 child: const Text("Refresh"),
-              ),
             );
           }
+          print("future is finished");
           return Text(projectSnap2.data!);
         }
     );
@@ -58,15 +57,16 @@ class _Evaluate extends State<Evaluate> {
                     print("update");
                   });
                 },
-                child: const Text("Refresh"),
+                child: Text("refresh"),
               ),
             );
           }
+          print("building list");
           return ListView.builder(
             itemCount: projectSnap.data!.length,
             itemBuilder: (BuildContext context, int index) {
               return Card(
-                child: Row(
+                child: Column(
                   children: [
                     Image.memory(imencode(ImageFormat.jpg.ext, projectSnap.data![index])),
                     const Divider(),

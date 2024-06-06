@@ -2,6 +2,8 @@ import 'dart:ffi' as ffi;
 import 'package:flutter/services.dart';
 import 'package:opencv_dart/opencv_dart.dart';
 
+import 'match_char.dart';
+
 class Segmenter {
 
   Future<Uint8List> loadImage() async {
@@ -11,6 +13,7 @@ class Segmenter {
 
   Future<List<Mat>> segmentImage() async {
     Mat image = imdecode(await loadImage(), IMREAD_GRAYSCALE);
+    print("convertion complete");
     print(image.shape);
     List<Rect> rects = [];
     Mat resized = interpolateDown(image);
@@ -47,14 +50,14 @@ class Segmenter {
   Future<String> detectChar(Mat line) {
     List<Rect> rects = [];
     Mat resized = interpolateDown(line);
-    Mat kernel = Mat.ones(2,2, ffi.Uint8 as MatType);
+    Mat kernel = Mat.ones(2,2, MatType.CV_8SC1);
     Mat imageDilation = erode(resized, kernel, iterations: 2);
     Mat flippedImg = bitwiseNOT(imageDilation);
     (double, Mat) result = threshold(flippedImg, 127, 255, 0);
     (VecVecPoint, Mat) contoursR = findContours(result.$2, RETR_TREE, CHAIN_APPROX_SIMPLE);
     VecVecPoint contours = contoursR.$1;
     if(contours.isEmpty) {
-      //return Future<String>().;
+      //return Future<String>();
     }
     for (VecPoint contour in contours) {
       Rect r = boundingRect(contour);
@@ -78,20 +81,28 @@ class Segmenter {
       }
       chars.add(line.region(
           Rect(
-            rect.width + 2,
-            rect.height + 2,
-            rect.x - 1,
-            rect.y - 1,
+            rect.width,
+            rect.height,
+            rect.x,
+            rect.y,
           )
       ));
     }
-    //Future<String> resultString = getString(chars);
-    //return resultString;
-    return Future(() => "");
+    Future<String> resultString = getString(chars);
+    return resultString;
   }
-  /*
+
   Future<String> getString(List<Mat> chars) async {
     MatchChar matcher = MatchChar();
+    String sentence = "";
+    matcher.loadDict();
+    print(matcher.validationChar.length);
+    for (Mat char in chars) {
+      sentence += await matcher.match(char);
+      print(char.shape);
+    }
+    return sentence;
+    /*
     SendPort sendPort = SendPort();
     List<ReceivePort> futures = [];
     for (int i = 0; i < chars.length; i++) {
@@ -103,7 +114,15 @@ class Segmenter {
       result += future.take(0) as String;
     }
     return result;
+     */
   }
-  
-   */
+  Future<Mat> generatedImage() {
+    MatchChar matcher = MatchChar();
+    return matcher.getCharacterImage("例", (100,100));
+  }
+
+  Future<(Mat, Mat)> showDetection() async {
+    MatchChar matchChar = MatchChar();
+    return matchChar.debugDetection();
+  }
 }

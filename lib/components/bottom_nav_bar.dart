@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'package:chinese_ocr/history_page.dart';
-import 'package:chinese_ocr/translation_page.dart';
-import 'package:chinese_ocr/main.dart';
-import '../settings_page.dart';
-import '../translation_page.dart';
+import 'package:scriptsense/history_page.dart';
+import 'package:scriptsense/translation_page.dart';
+import 'package:scriptsense/main.dart';
+import 'package:scriptsense/settings_page.dart';
 
 class BottomNavBar extends NavigationBar{
   static const Color color = Colors.redAccent;
