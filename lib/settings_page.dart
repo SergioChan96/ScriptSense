@@ -1,6 +1,6 @@
 import 'package:scriptsense/components/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
-import 'components/header.dart';
+import 'package:scriptsense/components/header.dart';
 
 class Settings extends StatefulWidget {
   const Settings({super.key});

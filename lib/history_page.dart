@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'components/bottom_nav_bar.dart';
-import 'components/header.dart';
+import 'package:scriptsense/components/bottom_nav_bar.dart';
+import 'package:scriptsense/components/header.dart';
 
 class History extends StatefulWidget {
   const History({super.key});

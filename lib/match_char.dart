@@ -26,7 +26,6 @@ class MatchChar {
     List<String> entrys = data.trim().split("\n");
     for(String entry in entrys) {
       final jsonResult = jsonDecode(entry.trim());
-      print(jsonResult["character"]);
       validationChar.add(jsonResult["character"]);
     }
   }
@@ -42,20 +41,19 @@ class MatchChar {
     if (filename.isEmpty) {
       return "";
     }
-    print('identification executed in ${stopwatch.elapsed}');
+    print('identification executed in ${stopwatch.elapsed.inSeconds}s');
     return filename;
   }
   Future<String> identify(Mat char) async {
-    List<String> tempDict = [];
     String bestChar = "";
     int counter = 0;
     double bestxCorr = 0;
-    for (String digitalChar in tempDict) {
+    for (String digitalChar in validationChar) {
       counter++;
       if (counter == 10000) {
         break;
       }
-      Mat template = await getCharacterImage(digitalChar, (char.size[0],char.size[1]));
+      Mat template = await getCharacterImage(digitalChar, (char.size[1],char.size[0]));
       Mat cross_correlation = matchTemplate(char, template, TM_CCORR_NORMED);
       (double, double, Point, Point) result = minMaxLoc(cross_correlation);
       if (result.$2 > bestxCorr) {
@@ -87,7 +85,6 @@ class MatchChar {
     ByteData? byteData = await img.toByteData(format: ui.ImageByteFormat.png);
     Uint8List pngBytes = byteData!.buffer.asUint8List();
     Mat mat = imdecode(pngBytes, IMREAD_GRAYSCALE);
-    print(mat.shape);
     return mat;
   }
   Future<(Mat, Mat)> debugDetection() async {

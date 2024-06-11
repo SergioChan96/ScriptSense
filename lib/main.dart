@@ -1,7 +1,7 @@
 import 'package:scriptsense/evaluate.dart';
 import 'package:flutter/material.dart';
-import 'components/bottom_nav_bar.dart';
-import 'components/header.dart';
+import 'package:scriptsense/components/bottom_nav_bar.dart';
+import 'package:scriptsense/components/header.dart';
 
 void main() {
   runApp(const ScriptSense());

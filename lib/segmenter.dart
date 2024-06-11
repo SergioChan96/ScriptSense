@@ -1,8 +1,9 @@
-import 'dart:ffi' as ffi;
+
 import 'package:flutter/services.dart';
 import 'package:opencv_dart/opencv_dart.dart';
 
-import 'match_char.dart';
+import 'package:scriptsense/match_char.dart';
+
 
 class Segmenter {
 
@@ -13,18 +14,14 @@ class Segmenter {
 
   Future<List<Mat>> segmentImage() async {
     Mat image = imdecode(await loadImage(), IMREAD_GRAYSCALE);
-    print("convertion complete");
-    print(image.shape);
     List<Rect> rects = [];
     Mat resized = interpolateDown(image);
-    print(resized.shape);
     Mat kernel = Mat.ones(1, 6, MatType.CV_8SC1);
     Mat imageDilation = erode(resized, kernel, iterations: 2);
     Mat flippedImg = bitwiseNOT(imageDilation);
     (double, Mat) result = threshold(flippedImg, 127, 255, 0);
     (VecVecPoint, Mat) contoursR = findContours(result.$2, RETR_TREE, CHAIN_APPROX_SIMPLE);
     VecVecPoint contours = contoursR.$1;
-    print("contour found: ${contours.length}");
     if(contours.isEmpty) {
       print("no contours found");
       return [];
@@ -32,7 +29,6 @@ class Segmenter {
     for (VecPoint contour in contours) {
       Rect r = boundingRect(contour);
       int x = r.x*2; int y = r.y*2; int w = r.width*2; int h = r.height*2;
-      print("x: $x, y: $y, w: $w, h: $h");
       if (2*h < w && w > 10 && h > 10) {
         rects.add(Rect(x,y,w,h));
       }
@@ -43,10 +39,12 @@ class Segmenter {
     }
     return crops;
   }
+
   Mat interpolateDown(Mat image) {
     Size shape = (image.width~/2, image.height~/2);
     return resize(image, shape, interpolation: INTER_AREA);
   }
+
   Future<String> detectChar(Mat line) {
     List<Rect> rects = [];
     Mat resized = interpolateDown(line);
@@ -95,12 +93,11 @@ class Segmenter {
   Future<String> getString(List<Mat> chars) async {
     MatchChar matcher = MatchChar();
     String sentence = "";
-    matcher.loadDict();
-    print(matcher.validationChar.length);
+    await matcher.loadDict();
     for (Mat char in chars) {
       sentence += await matcher.match(char);
-      print(char.shape);
     }
+    print(sentence);
     return sentence;
     /*
     SendPort sendPort = SendPort();

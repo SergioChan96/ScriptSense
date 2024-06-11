@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 
-import 'package:scriptsense/Segmenter.dart';
+import 'package:scriptsense/segmenter.dart';
 import 'package:flutter/material.dart';
 import 'package:opencv_dart/opencv_dart.dart';
 
