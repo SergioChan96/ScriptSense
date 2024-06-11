@@ -8,13 +8,20 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppBar(
+    return SliverAppBar(
+      expandedHeight: 0.0,
+      floating: false,
+      pinned: true,
       backgroundColor: Theme.of(context).colorScheme.surfaceContainer,
-      title: Center(
-        child: Text(
-          title,
-          style: const TextStyle(
-            color: color,
+      title: Padding(
+        padding: const EdgeInsets.only(top: 20.0, bottom: 20.0),
+        child: Center(
+          child: Text(
+            title,
+            style: const TextStyle(
+              color: color,
+              fontSize: 26.0,
+            ),
           ),
         ),
       ),

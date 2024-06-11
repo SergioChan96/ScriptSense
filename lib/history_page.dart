@@ -9,26 +9,19 @@ class History extends StatefulWidget {
   State<History> createState() => _History();
 }
 class _History extends State<History> {
+  List<bool> isHeartFilled = List.filled(5, false);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const Header(title: 'Historie'),
       body: NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
-            const SliverAppBar(
-              expandedHeight: 0.0,
-              floating: false,
-              pinned: true,
-              //flexibleSpace: FlexibleSpaceBar(
-              //  title: Text(''),
-              //)
-            )
+            const Header(title: 'Historie'),
           ];
         },
         body: Padding(
-          padding: const EdgeInsets.only(top: 30.0, bottom: 30.0),
+          padding: const EdgeInsets.only(top: 15.0, bottom: 30.0),
           child: ListView.builder(
             itemCount: 5,
             itemBuilder: (BuildContext context, int index) {
@@ -36,17 +29,33 @@ class _History extends State<History> {
                 child: SizedBox(
                   width: MediaQuery.of(context).size.width * 0.8,
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 5.0, bottom: 5.0),
+                    padding: const EdgeInsets.only(top: 5.0, bottom: 10.0),
                     child: Card(
                       child: Padding(
                         padding: const EdgeInsets.all(20.0),
                         child: Column(
                           children: [
-                            const Row(
+                             Row(
                               children: [
-                                Text('示例文本', style: TextStyle(fontWeight: FontWeight.bold)), // "Beispieltext" (auf chinesisch)
-                                Spacer(),
-                                Icon(Icons.favorite_border, color: Colors.redAccent)
+                                const Padding(
+                                    padding: EdgeInsets.only(left: 5.0),
+                                    child: Text('示例文本', style: TextStyle(fontWeight: FontWeight.bold)), // "Beispieltext" (auf chinesisch)
+                                ),
+                                const Spacer(),
+                                Container(
+                                  padding: EdgeInsets.zero,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        isHeartFilled[index] = !isHeartFilled[index];
+                                      });
+                                    },
+                                    child: Icon(
+                                      isHeartFilled[index] ? Icons.favorite : Icons.favorite_border,
+                                      color: isHeartFilled[index] ? Colors.redAccent : Colors.grey,
+                                    ),
+                                  ),
+                                )
                               ],
                             ),
                             Padding(

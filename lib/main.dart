@@ -44,12 +44,18 @@ class _ScriptSensePage extends State<ScriptSensePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: Header(title: widget.title),
-      body: Center(
-        child: ElevatedButton(
-          onPressed:_incrementCounter,
-          child: const Text("Scan Page"),
-        ),
+      body: CustomScrollView(
+        slivers: <Widget>[
+          Header(title: widget.title), // use the new widget here
+          SliverFillRemaining(
+            child: Center(
+              child: ElevatedButton(
+                onPressed:_incrementCounter,
+                child: const Text("Scan Page"),
+              ),
+            ),
+          ),
+        ],
       ),
       bottomNavigationBar: BottomNavBar(
         selectedIndex: 0,
