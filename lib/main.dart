@@ -1,7 +1,7 @@
-import 'package:chinese_ocr/evaluate.dart';
+import 'package:scriptsense/evaluate.dart';
 import 'package:flutter/material.dart';
-import 'components/bottom_nav_bar.dart';
-import 'components/header.dart';
+import 'package:scriptsense/components/bottom_nav_bar.dart';
+import 'package:scriptsense/components/header.dart';
 
 void main() {
   runApp(const ScriptSense());
@@ -13,7 +13,7 @@ class ScriptSense extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'ScriptSense',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
