@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:chinese_ocr/router/router.dart';
 import '../components/header.dart';
-import 'package:chinese_ocr/ui/components/bottom_nav_bar.dart';
 
 
 class MoreSettings extends StatefulWidget {

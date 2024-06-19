@@ -1,6 +1,6 @@
-import 'package:chinese_ocr/router/router.dart';
 import 'package:flutter/material.dart';
 
+import 'package:chinese_ocr/ui/buttons/info_button.dart';
 import 'package:chinese_ocr/ui/components/bottom_nav_bar.dart';
 import 'package:chinese_ocr/ui/components/header.dart';
 
@@ -22,7 +22,10 @@ class _Translation extends State<Translation> {
         slivers: <Widget>[
         const Header(title: "Übersetzung"),
         SliverFillRemaining(
-        child: Center(
+        child: Column(
+          children: [
+            InfoButton(infoText: "Erleben Sie maximale Flexibilität beim Übersetzen! Auf der manuellen Übersetzungsseite unserer App können Sie beliebige chinesische Texte eingeben und sofort in Ihre gewünschte Sprache übersetzen lassen. Geben Sie den Text einfach in das dafür vorgesehene Feld ein und drücken Sie auf 'Übersetzen'. Unsere App liefert Ihnen prompt eine präzise Übersetzung."),
+            Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -36,6 +39,9 @@ class _Translation extends State<Translation> {
                       child: ConstrainedBox(
                         constraints: const BoxConstraints(minHeight: 150),
                         child: const TextField(
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                          ),
                           maxLines: null,
                         ),
                       ),
@@ -52,6 +58,7 @@ class _Translation extends State<Translation> {
                           child: DropdownButtonHideUnderline(
                               child:DropdownButton<String>(
                               value: 'ZHO',
+                              style: TextStyle(color: Colors.grey.shade900),
                               elevation: 3,
                               items: const [
                                 DropdownMenuItem<String>(
@@ -93,6 +100,7 @@ class _Translation extends State<Translation> {
                           DropdownButtonHideUnderline(
                               child:DropdownButton<String>(
                               value: 'DEU',
+                              style: TextStyle(color: Colors.grey.shade900),
                               elevation: 3,
                               items: const [
                                 DropdownMenuItem<String>(
@@ -125,6 +133,9 @@ class _Translation extends State<Translation> {
                       child: ConstrainedBox(
                         constraints: const BoxConstraints(minHeight: 150),
                         child: const TextField(
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                          ),
                           maxLines: null,
                         ),
                       ),
@@ -135,7 +146,9 @@ class _Translation extends State<Translation> {
             ],
           ),
         ),
+      ]
       ),
+    )
       ],
       ),
       bottomNavigationBar: BottomNavBar(

@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:chinese_ocr/router/router.dart';
-import 'package:chinese_ocr/ui/evaluate_page.dart';
-import 'ui/components/bottom_nav_bar.dart';
-import 'ui/components/header.dart';
-import 'ui/home_page.dart';
 
 void main() {
   runApp(const ScriptSense());

@@ -42,14 +42,32 @@ final GoRouter router = GoRouter(
         pageBuilder: (context, state) => const MaterialPage<void>(
           child: Settings(),
         ),
-        /*routes: [
+        routes: [
           GoRoute(
             path: 'more_settings',
             pageBuilder: (context, state) => const MaterialPage<void>(
               child: MoreSettings(),
             ),
           ),
-        ]*/
+          GoRoute(
+            path: 'impressum',
+            pageBuilder: (context, state) => const MaterialPage<void>(
+              child: MoreSettings(),
+            ),
+          ),
+          GoRoute(
+            path: 'terms_and_conditions',
+            pageBuilder: (context, state) => const MaterialPage<void>(
+              child: MoreSettings(),
+            ),
+          ),
+          GoRoute(
+            path: 'tipps_and_tricks.dart',
+            pageBuilder: (context, state) => const MaterialPage<void>(
+              child: MoreSettings(),
+            ),
+          ),
+        ]
       ),
     ],
   );
