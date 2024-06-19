@@ -19,8 +19,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ">=3.0.0 <4.0.0"
-  flutter: ">=3.0.0"
+  sdk: ^3.4.0
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -31,20 +30,21 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
-  opencv_dart: ^1.0.5
-  camera: ^0.11.0+1
-  meta: 1.15.0
-  flutter_riverpod: ^2.5.1
-  riverpod_annotation: ^2.3.5  # The following adds the Cupertino Icons font to your application.
+  opencv_dart: ^1.0.8
+  flutter_riverpod: ^3.0.0-dev.3
+  riverpod_annotation: ^3.0.0-dev.3
+  # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.6
+  camera: ^0.11.0+1
+  freezed_annotation: ^2.4.1
 
 dev_dependencies:
-  build_runner:
+  build_runner: ^2.4.11
   custom_lint:
-  riverpod_generator: ^2.4.2
-  riverpod_lint: ^2.3.12
+  freezed: ^2.5.2
+  riverpod_generator: ^3.0.0-dev.11
+  riverpod_lint: ^3.0.0-dev.4
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -54,7 +54,6 @@ dev_dependencies:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
-
 # The following section is specific to Flutter packages.
 flutter:
   assets:

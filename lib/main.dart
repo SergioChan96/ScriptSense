@@ -1,10 +1,13 @@
-import 'package:scriptsense/evaluate.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:scriptsense/result_page.dart';
 import 'package:flutter/material.dart';
 import 'package:scriptsense/components/bottom_nav_bar.dart';
 import 'package:scriptsense/components/header.dart';
 
 void main() {
-  runApp(const ScriptSense());
+  runApp(ProviderScope(
+    child: ScriptSense(),
+  ));
 }
 
 class ScriptSense extends StatelessWidget {
@@ -37,7 +40,7 @@ class _ScriptSensePage extends State<ScriptSensePage> {
   void _incrementCounter() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const Evaluate()),
+      MaterialPageRoute(builder: (context) => const ResultPage()),
     );
   }
 
