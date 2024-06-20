@@ -40,7 +40,7 @@ class _ScriptSensePage extends State<ScriptSensePage> {
   void _incrementCounter() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const ResultPage()),
+      MaterialPageRoute(builder: (context) => ResultPage()),
     );
   }
 
