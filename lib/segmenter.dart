@@ -87,7 +87,7 @@ class Segmenter {
           )
       ));
     }
-    //Future<String> resultString = getString(chars);
+    Future<String> resultString = getString(chars);
     return "resultString";
   }
 
