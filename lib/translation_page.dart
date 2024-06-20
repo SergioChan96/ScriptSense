@@ -1,5 +1,5 @@
-import 'package:chinese_ocr/components/bottom_nav_bar.dart';
-import 'package:chinese_ocr/components/header.dart';
+import 'package:scriptsense/components/bottom_nav_bar.dart';
+import 'package:scriptsense/components/header.dart';
 import 'package:flutter/material.dart';
 
 class Translation extends StatefulWidget {
@@ -112,7 +112,7 @@ class _Translation extends State<Translation> {
         ),
       ),
       bottomNavigationBar: BottomNavBar(
-        selectedIndex: 3, context: context,
+        selectedIndex: 2, context: context,
       ),
     );
   }

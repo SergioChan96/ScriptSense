@@ -1,4 +1,4 @@
-package com.example.chinese_ocr;
+package com.example.scriptsense;
 
 import io.flutter.embedding.android.FlutterActivity;
 

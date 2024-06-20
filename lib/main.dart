@@ -1,10 +1,13 @@
-import 'package:chinese_ocr/evaluate.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:scriptsense/result_page.dart';
 import 'package:flutter/material.dart';
-import 'components/bottom_nav_bar.dart';
-import 'components/header.dart';
+import 'package:scriptsense/components/bottom_nav_bar.dart';
+import 'package:scriptsense/components/header.dart';
 
 void main() {
-  runApp(const ScriptSense());
+  runApp(ProviderScope(
+    child: ScriptSense(),
+  ));
 }
 
 class ScriptSense extends StatelessWidget {
@@ -13,7 +16,7 @@ class ScriptSense extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'ScriptSense',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
@@ -37,7 +40,7 @@ class _ScriptSensePage extends State<ScriptSensePage> {
   void _incrementCounter() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const Evaluate()),
+      MaterialPageRoute(builder: (context) => ResultPage()),
     );
   }
 
