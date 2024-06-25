@@ -16,7 +16,7 @@ class _InfoButtonState extends State<InfoButton> {
     return Align(
         alignment: Alignment.topRight,
         child: Padding(
-        padding: const EdgeInsets.only(right: 5.0, top: 5.0),
+        padding: const EdgeInsets.only(right: 10.0, top: 5.0),
         child: IconButton(
           icon: const Icon(Icons.info_outline, color: Colors.grey,),
           onPressed: () {

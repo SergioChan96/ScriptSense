@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import 'package:chinese_ocr/services/theme_provider.dart';
 import 'package:chinese_ocr/router/router.dart';
 
 void main() {
-  runApp(const ScriptSense());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => ThemeProvider(),
+      child: const ScriptSense(),
+    ),
+  );
 }
 
 class ScriptSense extends StatelessWidget {
@@ -11,15 +18,21 @@ class ScriptSense extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+
     return MaterialApp.router(
       routerConfig: router,
-      /*title: 'Flutter Demo',
+      title: 'Script Sense',
+      themeMode: themeProvider.themeMode,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
+        brightness: Brightness.light,
       ),
-      home: const ScriptSensePage(title: 'ScriptSense Home'),*/
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        useMaterial3: true,
+      ),
     );
   }
 }
-

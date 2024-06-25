@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
-import 'components/header.dart';
+import '../../services/theme_provider.dart';
+import '../components/header.dart';
+import 'package:chinese_ocr/router/typed_routes.dart';
 import 'package:chinese_ocr/ui/components/bottom_nav_bar.dart';
 
 
@@ -12,11 +14,13 @@ class Settings extends StatefulWidget {
   @override
   State<Settings> createState() => _Settings();
 }
-class _Settings extends State<Settings> {
-  bool isDarkMode = false;
 
+class _Settings extends State<Settings> {
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    bool isDarkMode = themeProvider.themeMode == ThemeMode.dark;
+
     return Scaffold(
       body: NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
@@ -49,13 +53,18 @@ class _Settings extends State<Settings> {
                       child: Column(
                         children: [
                           TextButton(
-                              onPressed: () => context.go('/impressum'),
-                              child: const Row(
+                              onPressed: () { ImpressumRoute().go(context);},
+                              child: Row(
                                 children: [
                                   Icon(Icons.info_outline, color: Colors.grey, size: 20,),
                                   Padding(
                                     padding: EdgeInsets.only(left: 5.0),
-                                    child: Text('Impressum', style: TextStyle(color: Colors.black)),
+                                    child: Text(
+                                      'Impressum',
+                                      style: TextStyle(
+                                        color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black,
+                                      ),
+                                    ),
                                   ),
                                   Spacer(),
                                   Icon(Icons.arrow_forward_ios, color: Colors.redAccent, size: 20,)
@@ -73,13 +82,18 @@ class _Settings extends State<Settings> {
                             ),
                           ),
                           TextButton(
-                              onPressed: () => context.go('/terms_and_conditions'),
-                              child: const Row(
+                              onPressed: () { TermsAndConditionsRoute().go(context);},
+                              child: Row(
                                 children: [
                                   Icon(Icons.privacy_tip_outlined, color: Colors.grey, size: 20,),
                                   Padding(
                                     padding: EdgeInsets.only(left: 5.0),
-                                    child: Text('Nutzungsbedingungen', style: TextStyle(color: Colors.black)),
+                                    child: Text(
+                                      'Nutzungsbedingungen',
+                                      style: TextStyle(
+                                        color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black,
+                                      ),
+                                    )
                                   ),
                                   Spacer(),
                                   Icon(Icons.arrow_forward_ios, color: Colors.redAccent, size: 20,)
@@ -97,13 +111,18 @@ class _Settings extends State<Settings> {
                             ),
                           ),
                           TextButton(
-                              onPressed: () => context.go('/tipps_and_tricks.dart'),
-                              child: const Row(
+                              onPressed: () {TippsAndTricksRoute().go(context);},
+                              child: Row(
                                 children: [
                                   Icon(Icons.tips_and_updates_outlined, color: Colors.grey, size: 20,),
                                   Padding(
                                     padding: EdgeInsets.only(left: 5.0),
-                                    child: Text('Tipps und Tricks', style: TextStyle(color: Colors.black)),
+                                    child: Text(
+                                      'Tipps und Tricks',
+                                      style: TextStyle(
+                                        color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black,
+                                      ),
+                                    )
                                   ),
                                   Spacer(),
                                   Icon(Icons.arrow_forward_ios, color: Colors.redAccent, size: 20,)
@@ -144,7 +163,12 @@ class _Settings extends State<Settings> {
                                     Icon(Icons.dark_mode_outlined, color: Colors.grey, size: 20,),
                                     Padding(
                                       padding: EdgeInsets.only(left: 5.0),
-                                      child: Text('Darkmode', style: TextStyle(color: Colors.black)),
+                                      child: Text(
+                                        'Darkmode',
+                                        style: TextStyle(
+                                          color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black,
+                                        ),
+                                      )
                                     ),
                                     Spacer(),
                                     Transform.scale(
@@ -156,7 +180,7 @@ class _Settings extends State<Settings> {
                                         onChanged: (value) {
                                           setState(() {
                                             isDarkMode = value;
-                                            // TO DO: dark mode logic
+                                            themeProvider.toggleTheme(isDarkMode);
                                           });
                                         },
                                       ),
@@ -176,13 +200,18 @@ class _Settings extends State<Settings> {
                             ),
                           ),
                           TextButton(
-                              onPressed: () => context.go('more_settings'),
-                              child: const Row(
+                              onPressed: () { MoreSettingsRoute().go(context);},
+                              child: Row(
                                 children: [
                                   Icon(Icons.question_mark_outlined, color: Colors.grey, size: 20,),
                                   Padding(
                                     padding: EdgeInsets.only(left: 5.0),
-                                    child: Text('Weitere Einstellung', style: TextStyle(color: Colors.black)),
+                                    child: Text(
+                                      'Weitere Einstellung',
+                                      style: TextStyle(
+                                        color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black,
+                                      ),
+                                    )
                                   ),
                                   Spacer(),
                                   Icon(Icons.arrow_forward_ios, color: Colors.redAccent, size: 20,)

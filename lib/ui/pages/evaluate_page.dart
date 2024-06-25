@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 
-import 'package:chinese_ocr/services/Segmenter.dart';
+import 'package:chinese_ocr/controller/Segmenter.dart';
 import 'package:flutter/material.dart';
 import 'package:opencv_dart/opencv_dart.dart';
 

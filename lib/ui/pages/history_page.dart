@@ -1,9 +1,9 @@
 import 'package:chinese_ocr/ui/buttons/filter_button.dart';
 import 'package:flutter/material.dart';
 
-import 'buttons/info_button.dart';
-import 'components/bottom_nav_bar.dart';
-import 'components/header.dart';
+import '../buttons/info_button.dart';
+import '../components/bottom_nav_bar.dart';
+import '../components/header.dart';
 
 class History extends StatefulWidget {
   final String history;
@@ -61,12 +61,12 @@ class _History extends State<History> {
                     }
                         return Center(
                           child: SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.8,
+                            width: MediaQuery.of(context).size.width * 0.9,
                             child: Padding(
                               padding: const EdgeInsets.only(bottom: 15.0),
                               child: Card(
                                 child: Padding(
-                                  padding: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20.0, top: 10.0),
+                                  padding: const EdgeInsets.only(left: 15.0, right: 15.0, bottom: 20.0, top: 10.0),
                                   child: Column(
                                     children: [
                                       Align(

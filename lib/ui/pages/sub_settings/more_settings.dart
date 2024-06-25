@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../components/header.dart';
+import '../../components/header.dart';
 
 
 class MoreSettings extends StatefulWidget {
