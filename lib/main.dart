@@ -1,7 +1,6 @@
-import 'package:scriptsense/evaluate.dart';
 import 'package:flutter/material.dart';
-import 'package:scriptsense/components/bottom_nav_bar.dart';
-import 'package:scriptsense/components/header.dart';
+
+import 'package:scriptsense/router/router.dart';
 
 void main() {
   runApp(const ScriptSense());
@@ -12,49 +11,17 @@ class ScriptSense extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'ScriptSense',
+    return MaterialApp.router(
+      routerConfig: router,
+      /*
+      title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
       home: const ScriptSensePage(title: 'ScriptSense Home'),
+      */
     );
   }
 }
 
-class ScriptSensePage extends StatefulWidget {
-  const ScriptSensePage({super.key, required this.title});
-  final String title;
-
-  @override
-  State<ScriptSensePage> createState() => _ScriptSensePage();
-}
-
-class _ScriptSensePage extends State<ScriptSensePage> {
-  //final int _counter = 0;
-
-  void _incrementCounter() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const Evaluate()),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: Header(title: widget.title),
-      body: Center(
-        child: ElevatedButton(
-          onPressed:_incrementCounter,
-          child: const Text("Scan Page"),
-        ),
-      ),
-      bottomNavigationBar: BottomNavBar(
-        selectedIndex: 0,
-        context: context,
-      ),
-    );
-  }
-}

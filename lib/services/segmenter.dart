@@ -2,7 +2,7 @@
 import 'package:flutter/services.dart';
 import 'package:opencv_dart/opencv_dart.dart';
 
-import 'package:scriptsense/match_char.dart';
+import 'package:scriptsense/services/match_char.dart';
 
 
 class Segmenter {
