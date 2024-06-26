@@ -1,18 +1,18 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:opencv_dart/opencv_dart.dart';
-import 'package:scriptsense/result_controller.dart';
+import 'package:scriptsense/ui/result_controller.dart';
 
 class ResultPage extends ConsumerWidget {
-  bool AnalysnotStarted = true;
-
+  const ResultPage({super.key});
+  
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final resultmodel = ref.watch(resultControllerProvider);
     final resultController = ref.read(resultControllerProvider.notifier);
-    if(AnalysnotStarted) {
+    if(resultController.AnalysnotStarted) {
       resultController.startAnalysisofImage();
-      AnalysnotStarted = false;
+      resultController.AnalysnotStarted = false;
     }
     return Scaffold(
       appBar: AppBar(

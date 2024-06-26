@@ -1,14 +1,14 @@
 
 import 'package:opencv_dart/opencv_dart.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:scriptsense/result_model.dart';
-import 'package:scriptsense/segmenter.dart';
+import 'package:scriptsense/ui/result_model.dart';
+import 'package:scriptsense/services/segmenter.dart';
 
 part 'result_controller.g.dart';
 
 @riverpod
 class ResultController extends _$ResultController {
-
+  bool AnalysnotStarted = true;
   @override
   ResultModel build() {
     return ResultModel.initial();
