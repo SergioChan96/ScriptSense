@@ -47,7 +47,7 @@ class _HomePage extends State<HomePage> {
                         ),
                         SizedBox(height: 55),
                         ElevatedButton(
-                          onPressed: () => context.go('/result'),
+                          onPressed: () => context.go('/camera'),
                           child: const Text("Start Scan", style: TextStyle(color: Colors.white)),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.redAccent,
