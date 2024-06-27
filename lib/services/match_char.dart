@@ -24,7 +24,7 @@ class MatchChar {
     List<String> entrys = data.trim().split("\n");
     for(String entry in entrys) {
       final jsonResult = jsonDecode(entry.trim());
-      validationChar.add(jsonResult["character"]);
+      validationChar.add(jsonResult["character"] as String);
     }
   }
 
