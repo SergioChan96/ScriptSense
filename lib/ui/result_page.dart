@@ -56,9 +56,9 @@ class ResultPage extends ConsumerWidget {
                   Align(
                     alignment: Alignment.topRight,
                     child: Checkbox.adaptive(
-                        value: false,
+                        value: resultController.saved[index],
                         onChanged: (value) {
-                          ref.read(resultControllerProvider.notifier).toggle(index)
+                          resultController.toggle(index);
                         }
                     ),
                   ),

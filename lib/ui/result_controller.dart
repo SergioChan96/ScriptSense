@@ -1,4 +1,3 @@
-
 import 'package:opencv_dart/opencv_dart.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:scriptsense/ui/result_model.dart';
@@ -33,5 +32,9 @@ class ResultController extends _$ResultController {
       debug.add(seg.debugDetect(line));
     }
     state = state.copyWith(lines: debug);
+  }
+  void toggle(int index) {
+     saved[index] = !saved[index];
+     state = state.copyWith(lines: state.lines, identifiedImages: state.identifiedImages);
   }
 }
