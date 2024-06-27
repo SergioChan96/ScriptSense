@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:scriptsense/ui/camera_page.dart';
 
 import 'package:scriptsense/ui/history_page.dart';
 import 'package:scriptsense/ui/result_page.dart';
@@ -22,12 +21,6 @@ final GoRouter router = GoRouter(
             path: 'result',
             pageBuilder: (context, state) => const MaterialPage<void>(
               child: ResultPage(),
-            ),
-          ),
-          GoRoute(
-            path: 'camera',
-            pageBuilder: (context, state) => const MaterialPage<void>(
-              child: CameraPage(),
             ),
           ),
         ]
