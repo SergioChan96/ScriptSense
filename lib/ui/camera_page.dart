@@ -10,10 +10,10 @@ class CameraPage extends ConsumerWidget {
 
   Future<void> loadImage() async {
     final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    XFile? pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
-      
+
     } else {
       print("no image has been picked");
     }
