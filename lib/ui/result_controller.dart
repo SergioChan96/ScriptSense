@@ -9,14 +9,16 @@ part 'result_controller.g.dart';
 @riverpod
 class ResultController extends _$ResultController {
   bool AnalysnotStarted = true;
+
+  List<bool> saved = [];
   @override
   ResultModel build() {
     return ResultModel.initial();
   }
-
   Future<void> startAnalysisofImage() async {
     Segmenter seg = Segmenter();
     state = state.copyWith(lines: await seg.segmentImage());
+    saved = List.filled(state.lines.length, false);
     Map<Mat, String> map = Map();
     for (Mat mat in state.lines) {
       map[mat] = await seg.detectChar(mat);
