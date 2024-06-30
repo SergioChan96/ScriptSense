@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:chinese_ocr/ui/buttons/info_button.dart';
-import 'package:chinese_ocr/ui/components/bottom_nav_bar.dart';
-import 'package:chinese_ocr/ui/components/header.dart';
+import 'package:scriptsense/ui/buttons/info_button.dart';
+import 'package:scriptsense/ui/components/bottom_nav_bar.dart';
+import 'package:scriptsense/ui/components/header.dart';
 
 import '../../services/translation_service.dart';
 

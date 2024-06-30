@@ -18,8 +18,8 @@ RouteBase get $homeRoute => GoRouteData.$route(
       factory: $HomeRouteExtension._fromState,
       routes: [
         GoRouteData.$route(
-          path: 'evaluate',
-          factory: $EvaluateRouteExtension._fromState,
+          path: 'result',
+          factory: $ResultRouteExtension._fromState,
         ),
       ],
     );
@@ -41,11 +41,11 @@ extension $HomeRouteExtension on HomeRoute {
   void replace(BuildContext context) => context.replace(location);
 }
 
-extension $EvaluateRouteExtension on EvaluateRoute {
-  static EvaluateRoute _fromState(GoRouterState state) => EvaluateRoute();
+extension $ResultRouteExtension on ResultRoute {
+  static ResultRoute _fromState(GoRouterState state) => ResultRoute();
 
   String get location => GoRouteData.$location(
-        '/evaluate',
+        '/result',
       );
 
   void go(BuildContext context) => context.go(location);

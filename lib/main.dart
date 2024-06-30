@@ -1,14 +1,17 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:provider/provider.dart' as provider;
 
-import 'package:chinese_ocr/services/theme_provider.dart';
-import 'package:chinese_ocr/router/router.dart';
+import 'package:scriptsense/router/router.dart';
+import 'package:scriptsense/services/theme_provider.dart';
 
 void main() {
   runApp(
-    ChangeNotifierProvider(
+    provider.ChangeNotifierProvider(
       create: (context) => ThemeProvider(),
-      child: const ScriptSense(),
+      child: ProviderScope(
+        child: ScriptSense(),
+      )
     ),
   );
 }
@@ -18,7 +21,7 @@ class ScriptSense extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
+    final themeProvider = provider.Provider.of<ThemeProvider>(context);
 
     return MaterialApp.router(
       routerConfig: router,
@@ -36,3 +39,4 @@ class ScriptSense extends StatelessWidget {
     );
   }
 }
+

@@ -1,14 +1,14 @@
-import 'package:chinese_ocr/ui/pages/sub_settings/terms_and_condition.dart';
-import 'package:chinese_ocr/ui/pages/sub_settings/tipps_and_tricks.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import 'package:chinese_ocr/ui/pages/history_page.dart';
-import 'package:chinese_ocr/ui/pages/translation_page.dart';
-import 'package:chinese_ocr/ui/pages/home_page.dart';
-import 'package:chinese_ocr/ui/pages/settings_page.dart';
-import 'package:chinese_ocr/ui/pages/evaluate_page.dart';
-import 'package:chinese_ocr/ui/pages/sub_settings/more_settings.dart';
+import 'package:scriptsense/ui/pages/sub_settings/terms_and_condition.dart';
+import 'package:scriptsense/ui/pages/sub_settings/tipps_and_tricks.dart';
+import 'package:scriptsense/ui/pages/history_page.dart';
+import 'package:scriptsense/ui/pages/translation_page.dart';
+import 'package:scriptsense/ui/pages/home_page.dart';
+import 'package:scriptsense/ui/pages/settings_page.dart';
+import 'package:scriptsense/ui/pages/result_page.dart';
+import 'package:scriptsense/ui/pages/sub_settings/more_settings.dart';
 
 import '../ui/pages/sub_settings/impressum.dart';
 
@@ -17,8 +17,8 @@ part 'typed_routes.g.dart';
 @TypedGoRoute<HomeRoute>(
   path: '/',
   routes: [
-    TypedGoRoute<EvaluateRoute>(
-      path: 'evaluate',
+    TypedGoRoute<ResultRoute>(
+      path: 'result',
     ),
   ],
 )
@@ -31,10 +31,10 @@ class HomeRoute extends GoRouteData {
 }
 
 @immutable
-class EvaluateRoute extends GoRouteData {
+class ResultRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    return Evaluate();
+    return ResultPage();
   }
 }
 

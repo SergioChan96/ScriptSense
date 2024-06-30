@@ -1,9 +1,9 @@
-import 'package:chinese_ocr/ui/buttons/filter_button.dart';
+import 'package:scriptsense/ui/buttons/filter_button.dart';
 import 'package:flutter/material.dart';
 
-import '../buttons/info_button.dart';
-import '../components/bottom_nav_bar.dart';
-import '../components/header.dart';
+import 'package:scriptsense/ui/buttons/info_button.dart';
+import 'package:scriptsense/ui/components/bottom_nav_bar.dart';
+import 'package:scriptsense/ui/components/header.dart';
 
 class History extends StatefulWidget {
   final String history;

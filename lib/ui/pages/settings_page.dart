@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../services/theme_provider.dart';
-import '../components/header.dart';
-import 'package:chinese_ocr/router/typed_routes.dart';
-import 'package:chinese_ocr/ui/components/bottom_nav_bar.dart';
-
+import 'package:scriptsense/ui/components/header.dart';
+import 'package:scriptsense/ui/components/bottom_nav_bar.dart';
+import 'package:scriptsense/services/theme_provider.dart';
+import 'package:scriptsense/router/typed_routes.dart';
 
 class Settings extends StatefulWidget {
   final String setting;

@@ -1,5 +1,8 @@
-import 'package:chinese_ocr/ui/buttons/info_button.dart';
+import 'package:scriptsense/ui/buttons/info_button.dart';
 import 'package:flutter/material.dart';
+
+//import 'components/bottom_nav_bar.dart';
+//import 'components/header.dart';
 
 import '../../router/typed_routes.dart';
 import '../components/bottom_nav_bar.dart';
@@ -47,7 +50,8 @@ class _HomePage extends State<HomePage> {
                         ),
                         SizedBox(height: 55),
                         ElevatedButton(
-                          onPressed: () { EvaluateRoute().go(context);},
+                          onPressed: () { ResultRoute().go(context);},
+                          //onPressed: () => context.go('/result'),
                           child: const Text("Start Scan", style: TextStyle(color: Colors.white)),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.redAccent,
