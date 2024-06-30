@@ -14,7 +14,7 @@ class CameraPage extends ConsumerWidget {
     if (pickedFile != null) {
 
     } else {
-      print("no image has been picked");
+      print("no image has been  picked");
     }
   }
 
