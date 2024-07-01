@@ -12,7 +12,7 @@ class CameraPage extends ConsumerWidget {
     final picker = ImagePicker();
     XFile? pickedFile = await picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
-
+      // open route and give picture with it
     } else {
       print("no image has been  picked");
     }
@@ -23,16 +23,22 @@ class CameraPage extends ConsumerWidget {
     final cameraControllerAsyncValue = ref.watch(cameraProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        forceMaterialTransparency: true,
-        actions: [
-          IconButton(
-              onPressed: () {
-                loadImage();
-              },
-              icon: Icon(Icons.image)
-          )
-        ],
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(MediaQuery.of(context).size.height * 0.05),
+        child: AppBar(
+          backgroundColor: Colors.black,
+          iconTheme: IconThemeData(
+            color: Colors.white,
+          ),
+          actions: [
+            IconButton(
+                onPressed: () {
+                  loadImage();
+                },
+                icon: Icon(Icons.image)
+            )
+          ],
+        ),
       ),
       body: cameraControllerAsyncValue.when(
         data: (cameraController) {
@@ -40,15 +46,20 @@ class CameraPage extends ConsumerWidget {
             children: [
               Expanded(child: CameraPreview(cameraController)),
               Container(
-                height: MediaQuery.of(context).size.height * 0.1,
+                color: Colors.black,
+                height: MediaQuery.of(context).size.height * 0.12,
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
+                    Spacer(flex: 1),
                     IconButton(
+                      iconSize: MediaQuery.of(context).size.height * 0.08,
                       onPressed: () {
-
+                        // set the flash for the photo
                       },
                       icon: Icon(Icons.flash_on)
                     ),
+                    Spacer(flex: 1),
                     GestureDetector(
                       onTap: () {
                         // Define the action to take the picture
@@ -64,7 +75,7 @@ class CameraPage extends ConsumerWidget {
                                 height: size,
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
-                                  color: Colors.white, // Outer ring color
+                                  color: Colors.white,
                                 ),
                               ),
                               Container(
@@ -72,7 +83,7 @@ class CameraPage extends ConsumerWidget {
                                 height: size * 0.9,
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
-                                  color: Colors.redAccent, // Outer ring color
+                                  color: Colors.redAccent,
                                 ),
                               ),
                               Container(
@@ -80,7 +91,7 @@ class CameraPage extends ConsumerWidget {
                                 height: size * 0.85,
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
-                                  color: Colors.white, // Inner circle color
+                                  color: Colors.white,
                                 ),
                               ),
                             ]
@@ -88,6 +99,7 @@ class CameraPage extends ConsumerWidget {
                         }
                       )
                     ),
+                    Spacer(flex: 5)
                   ],
                 ),
               )
