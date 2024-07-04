@@ -1,4 +1,4 @@
-import 'dart:nativewrappers/_internal/vm/lib/typed_data_patch.dart';
+import 'dart:typed_data';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -9,8 +9,8 @@ import 'package:scriptsense/controller/result_controller.dart';
 import 'package:scriptsense/model/save_model.dart';
 
 class ResultPage extends ConsumerWidget {
-  const ResultPage(Uint8List this.image, {super.key});
-  final Uint8List image;
+  const ResultPage(this.image, {super.key});
+  final String image;
 
   void save(Map<Mat, String> imageList, List<bool> boolList) {
     List<SaveModel> saveList = [];

@@ -1,4 +1,6 @@
-import 'dart:nativewrappers/_internal/vm/lib/typed_data_patch.dart';
+import 'dart:convert';
+import 'dart:typed_data';
+import 'dart:ui';
 
 import 'package:opencv_dart/opencv_dart.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -16,9 +18,10 @@ class ResultController extends _$ResultController {
   ResultModel build() {
     return ResultModel.initial();
   }
-  Future<void> startAnalysisofImage(Uint8List image) async {
+  Future<void> startAnalysisofImage(String image) async {
+    Mat matImage = convertStringtoImage(image);
     Segmenter seg = Segmenter();
-    state = state.copyWith(lines: await seg.segmentImage());
+    state = state.copyWith(lines: await seg.segmentImage(matImage));
     saved = List.filled(state.lines.length, false);
     Map<Mat, String> map = Map();
     for (Mat mat in state.lines) {
@@ -26,9 +29,14 @@ class ResultController extends _$ResultController {
       state = state.copyWith(identifiedImages: map);
     }
   }
+
+  Mat convertStringtoImage(String image) {
+    Uint8List imageData = base64Decode(image);
+    return imdecode(imageData, IMREAD_GRAYSCALE);
+  }
   Future<void> debugLines() async {
     Segmenter seg = Segmenter();
-    List<Mat> lines = await seg.segmentImage();
+    List<Mat> lines = await seg.segmentImage(await seg.loadImage());
     List<Mat> debug = [];
     for (Mat line in lines) {
       debug.add(seg.debugDetect(line));

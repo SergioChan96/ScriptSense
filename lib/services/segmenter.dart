@@ -7,13 +7,13 @@ import 'package:scriptsense/services/match_char.dart';
 
 class Segmenter {
 
-  Future<Uint8List> loadImage() async {
+  Future<Mat> loadImage() async {
     ByteData image = await rootBundle.load('assets/newspaper.jpg');
-    return image.buffer.asUint8List();
+    return imdecode(image.buffer.asUint8List(), IMREAD_GRAYSCALE);
   }
 
-  Future<List<Mat>> segmentImage() async {
-    Mat image = imdecode(await loadImage(), IMREAD_GRAYSCALE);
+  Future<List<Mat>> segmentImage(Mat image) async {
+    //Mat image = imdecode(await loadImage(), IMREAD_GRAYSCALE);
     List<Rect> rects = [];
     Mat resized = interpolateDown(image);
     Mat kernel = Mat.ones(1, 6, MatType.CV_8SC1);
@@ -45,7 +45,7 @@ class Segmenter {
     return resize(image, shape, interpolation: INTER_AREA);
   }
 
-  String detectChar(Mat line) {
+  Future<String> detectChar(Mat line) {
     List<Rect> rects = [];
     Mat resized = interpolateDown(line);
     Mat kernel = Mat.ones(2,2, MatType.CV_8SC1);
@@ -88,7 +88,7 @@ class Segmenter {
       ));
     }
     Future<String> resultString = getString(chars);
-    return "resultString";
+    return resultString;
   }
 
   Future<String> getString(List<Mat> chars) async {

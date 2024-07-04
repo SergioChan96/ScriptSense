@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:camera/camera.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -14,7 +16,7 @@ class CameraPageController extends _$CameraPageController {
   CameraPageModel build() {
     return CameraPageModel.initial();
   }
-  void init() async {
+  Future<void> init() async {
     if(initStarted) {
       return;
     }
@@ -31,17 +33,23 @@ class CameraPageController extends _$CameraPageController {
 
   void takePicture() async {
     XFile pic = await controller.takePicture();
-    state = state.copyWith(picture: pic);
+    Uint8List bytes = await pic.readAsBytes();
+    state = state.copyWith(picture: pic, convertedPic: bytes);
   }
 
   Future<void> loadImage() async {
     final picker = ImagePicker();
     XFile? pickedFile = await picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
-      // open route and give picture with it
+      Uint8List bytes = await pickedFile.readAsBytes();
+      state = state.copyWith(picture: pickedFile, convertedPic: bytes);
     } else {
       print("no image has been picked");
     }
+  }
+
+  void discardPic() {
+    state = state.copyWith(picture: null, convertedPic: null);
   }
 }
 
