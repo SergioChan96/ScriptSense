@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+
+import '../../router/typed_routes.dart';
 
 
 class BottomNavBar extends NavigationBar{
@@ -28,16 +29,16 @@ class BottomNavBar extends NavigationBar{
         onDestinationSelected: (int index) {
           switch (index) {
             case 0:
-              context.go('/');
+              HomeRoute().go(context);
               break;
             case 1:
-              context.go('/history');
+              HistoryRoute().go(context);
               break;
             case 2:
-              context.go('/translation');
+              TranslationRoute().go(context);
               break;
             case 3:
-              context.go('/settings');
+              SettingsRoute().go(context);
               break;
           }
     },
@@ -70,7 +71,7 @@ class BottomNavBar extends NavigationBar{
               label: "Übersetzung"
           ),
           const NavigationDestination(
-              icon: Icon(Icons.settings, color: color,),
+              icon: Icon(Icons.sub_settings, color: color,),
               label: "Einstellungen"
           ),
         ],

@@ -1,5 +1,3 @@
-
-
 import 'dart:nativewrappers/_internal/vm/lib/typed_data_patch.dart';
 import 'package:camera/camera.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';

@@ -4,9 +4,8 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:image_picker/image_picker.dart';
 
-import 'package:scriptsense/ui/camera_page_controller.dart';
+import 'package:scriptsense/controller/camera_page_controller.dart';
 
 class CameraPage extends ConsumerWidget {
   const CameraPage({super.key});
@@ -29,7 +28,7 @@ class CameraPage extends ConsumerWidget {
             IconButton(
                 onPressed: () {
                   camerPageController.loadImage();
-                  context.go("/result");
+                  context.go("/result", extra: cameraPageModel.convertedPic);
                 },
                 icon: Icon(Icons.image)
             )

@@ -13,15 +13,12 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
       floating: false,
       pinned: true,
       backgroundColor: Theme.of(context).colorScheme.surfaceContainer,
-      title: Padding(
-        padding: const EdgeInsets.only(top: 20.0, bottom: 20.0),
-        child: Center(
-          child: Text(
-            title,
-            style: const TextStyle(
-              color: color,
-              fontSize: 26.0,
-            ),
+      title: Center(
+        child: Text(
+          title,
+          style: const TextStyle(
+            color: color,
+            fontSize: 26.0,
           ),
         ),
       ),

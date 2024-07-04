@@ -2,7 +2,7 @@ import 'package:camera/camera.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import 'package:scriptsense/ui/camera_page_model.dart';
+import 'package:scriptsense/model/camera_page_model.dart';
 
 part "camera_page_controller.g.dart";
 
