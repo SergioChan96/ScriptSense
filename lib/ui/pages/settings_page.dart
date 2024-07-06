@@ -1,23 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:provider/provider.dart' as provider;
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive/hive.dart';
 
 import 'package:scriptsense/ui/components/header.dart';
 import 'package:scriptsense/ui/components/bottom_nav_bar.dart';
 import 'package:scriptsense/services/theme_provider.dart';
 import 'package:scriptsense/router/typed_routes.dart';
+import '../../controller/result_controller.dart';
+import '../../model/hive_text_model.dart';
 
-class Settings extends StatefulWidget {
-  final String setting;
-  const Settings({super.key, this.setting = 'default'});
+
+class Settings extends ConsumerStatefulWidget {
+  const Settings({Key? key}) : super(key: key);
 
   @override
-  State<Settings> createState() => _Settings();
+  _Settings createState() => _Settings();
 }
 
-class _Settings extends State<Settings> {
+class _Settings extends ConsumerState<Settings> {
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
+   // final String setting;
+    final resultController = ref.watch(resultControllerProvider.notifier);
+    final themeProvider = provider.Provider.of<ThemeProvider>(context);
     bool isDarkMode = themeProvider.themeMode == ThemeMode.dark;
 
     return Scaffold(
@@ -232,7 +238,34 @@ class _Settings extends State<Settings> {
                           Container(
                             margin: const EdgeInsets.only(top: 5.0),
                             child: TextButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: Text('Sind Sie sicher?'),
+                                        content: Text('Das löschen Ihrer gesammten Historie ist nicht rückgängig zu machen.'),
+                                        actions: <Widget>[
+                                          TextButton(
+                                            child: Text('Abbruch'),
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                          ),
+                                          TextButton(
+                                            child: Text('Historie löschen', style: TextStyle(color: Colors.redAccent)),
+                                            onPressed: () async {
+                                              //final box = Hive.box<HiveTextModel>('scannedTexts');
+                                              final box = await Hive.openBox<HiveTextModel>('scannedTexts');
+                                              await box.clear();
+                                              Navigator.of(context).pop();
+                                            },
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                },
                                 child: const Row(
                                   children: [
                                     Icon(Icons.cleaning_services_outlined, color: Colors.redAccent, size: 20,),

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
 class FilterButton extends StatefulWidget {
-  final ValueChanged<bool> onFilterChanged;
+  final ValueChanged<bool> onFavoriteFilterChanged;
+  final ValueChanged<bool> onDateAscendingFilterChanged;
+  final ValueChanged<bool> onDateDescendingFilterChanged;
 
-  FilterButton({required this.onFilterChanged});
+  FilterButton({required this.onFavoriteFilterChanged, required this.onDateAscendingFilterChanged, required this.onDateDescendingFilterChanged});
 
   @override
   State<FilterButton> createState() => _FilterButtonState();
@@ -36,15 +38,23 @@ class _FilterButtonState extends State<FilterButton> {
             setState(() {
               if (newValue == 'Meine Favoriten') {
                 showOnlyFavorites = !showOnlyFavorites;
-                widget.onFilterChanged(showOnlyFavorites);
+                widget.onFavoriteFilterChanged(showOnlyFavorites);
               }
               if (newValue == 'Datum aufsteigend') {
+                if (sortDateDescending) {
+                  sortDateDescending = !sortDateDescending;
+                  widget.onDateDescendingFilterChanged(sortDateDescending);
+                }
                 sortDateAscending = !sortDateAscending;
-                widget.onFilterChanged(sortDateAscending);
+                widget.onDateAscendingFilterChanged(sortDateAscending);
               }
               if (newValue == 'Datum absteigend') {
-                showOnlyFavorites = !showOnlyFavorites;
-                widget.onFilterChanged(showOnlyFavorites);
+                if (sortDateAscending) {
+                  sortDateAscending = !sortDateAscending;
+                  widget.onDateAscendingFilterChanged(sortDateAscending);
+                }
+                sortDateDescending = !sortDateDescending;
+                widget.onDateDescendingFilterChanged(sortDateDescending);
               }
             });
           },

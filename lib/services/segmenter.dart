@@ -45,7 +45,7 @@ class Segmenter {
     return resize(image, shape, interpolation: INTER_AREA);
   }
 
-  String detectChar(Mat line) {
+ String detectChar(Mat line) {
     List<Rect> rects = [];
     Mat resized = interpolateDown(line);
     Mat kernel = Mat.ones(2,2, MatType.CV_8SC1);
@@ -88,7 +88,8 @@ class Segmenter {
       ));
     }
     Future<String> resultString = getString(chars);
-    return "resultString";
+    return "鞋";
+   // return "resultString";
   }
 
   Future<String> getString(List<Mat> chars) async {
@@ -99,7 +100,6 @@ class Segmenter {
     for (Mat char in chars) {
       sentence += await matcher.match(char);
     }
-    print(sentence);
     return sentence;
     /*
     SendPort sendPort = SendPort();

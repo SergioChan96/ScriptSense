@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:scriptsense/ui/buttons/info_button.dart';
 import 'package:scriptsense/ui/components/bottom_nav_bar.dart';
 import 'package:scriptsense/ui/components/header.dart';
-
 import '../../services/translation_service.dart';
 
 
@@ -78,6 +77,11 @@ class _Translation extends State<Translation> {
                                 border: InputBorder.none,
                               ),
                               maxLines: null,
+                              keyboardType: TextInputType.multiline,
+                              textInputAction: TextInputAction.done,
+                              onSubmitted: (value) {
+                                _translate();
+                              },
                             ),
                           ),
                         ],
@@ -86,7 +90,7 @@ class _Translation extends State<Translation> {
                   ),
                 ),
               ),
-              Padding(
+             /* Padding(
                 padding: const EdgeInsets.only(right: 40.0, bottom: 20.0),
                 child:  Row(
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -104,7 +108,7 @@ class _Translation extends State<Translation> {
                     ),
                   ],
                 ),
-              ),
+              ),*/
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -146,10 +150,17 @@ class _Translation extends State<Translation> {
                       padding: const EdgeInsets.only(left: 15, right: 15, top: 2, bottom: 2),
                       child: ElevatedButton(
                         onPressed: () {
-
+                          setState(() {
+                            String temp = _sourceLanguage;
+                            _sourceLanguage = _targetLanguage;
+                            _targetLanguage = temp;
+                            String tempText = _textController.text;
+                            _textController.text = _translatedText;
+                            _translatedText = tempText;
+                          });
                         },
                          child: const Icon(
-                             Icons.sync_alt, // TO DO: maybe different icon damit für user klar wird von welcher sprache in welche übersetzte wird (idee pfeil von links nach rechts)
+                             Icons.sync_alt,
                              color: Colors.redAccent
                          )
                       ),
