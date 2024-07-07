@@ -123,7 +123,8 @@ class CameraPage extends ConsumerWidget {
                         foregroundColor: Colors.redAccent,
                       ),
                     onPressed: () {
-                        cameraPageController.controller.dispose();
+                      cameraPageController.saveImage();
+                      cameraPageController.controller.dispose();
                       ResultRoute(image: base64Encode(cameraPageModel.convertedPic!)).go(context);
                     },
                     child: Text("Analyze")

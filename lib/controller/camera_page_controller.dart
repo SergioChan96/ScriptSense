@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:camera/camera.dart';
+import 'package:gal/gal.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -46,6 +47,10 @@ class CameraPageController extends _$CameraPageController {
     } else {
       print("no image has been picked");
     }
+  }
+
+  Future<void> saveImage() async {
+    await Gal.putImageBytes(await state.picture!.readAsBytes());
   }
 
   void discardPic() {
