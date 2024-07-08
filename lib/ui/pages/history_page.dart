@@ -22,8 +22,6 @@ class _HistoryState extends ConsumerState<History> {
   bool sortDateDescending = true;
   String? dropdownValue = 'Meine Favoriten';
   List<bool> isHeartFilled = [];
-  //String _translatedText = '';
-  //final TranslationService _translationService = TranslationService();
   List<HiveTextModel> savedItems = [];
   late Box<HiveTextModel> box;
 
@@ -42,21 +40,12 @@ class _HistoryState extends ConsumerState<History> {
   Future<void> initHive() async {
      box = await Hive.openBox<HiveTextModel>('scannedTexts');
      isHeartFilled = List<bool>.filled(box.length, false);
-   // savedItems = box.values.toList();
-    //setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-    //final resultController = ref.watch(resultControllerProvider.notifier);
-   // var savedItems = resultController.savedItems;
-
-
-   /* savedItems.sort((a, b) {
-      var dateA = DateFormat('MM/dd/yyyy').parse(a.scanDate);
-      var dateB = DateFormat('MM/dd/yyyy').parse(b.scanDate);
-      return sortDateAscending ? dateA.compareTo(dateB) : dateB.compareTo(dateA);
-    });*/
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
       body: NestedScrollView(
@@ -72,7 +61,7 @@ class _HistoryState extends ConsumerState<History> {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 25.0, top: 15),
+                    padding: EdgeInsets.only(left: screenWidth * 0.065, top: screenHeight * 0.02),
                     child: FilterButton(
                       onFavoriteFilterChanged: (bool value) {
                         setState(() {
@@ -108,7 +97,7 @@ class _HistoryState extends ConsumerState<History> {
                       } else if (box.isEmpty){
                         return Center(
                           child: Padding(
-                            padding: const EdgeInsets.only(top: 40.0),
+                            padding: EdgeInsets.only(top: screenHeight * 0.05),
                           child: FractionallySizedBox(
                             widthFactor: 0.8,
                             child: Column(
@@ -116,16 +105,16 @@ class _HistoryState extends ConsumerState<History> {
                               children: [
                                 Icon(
                                   Icons.history,
-                                  size: 40,
+                                  size: screenHeight * 0.065,
                                   color: Colors.grey,
                                 ),
                                 Padding (
-                                  padding: const EdgeInsets.only(top: 5.0),
+                                  padding: EdgeInsets.only(top: screenHeight * 0.01),
                                   child: Text(
                                     'Noch keine gescannten Übersetzungen',
                                     style: TextStyle(
                                       color: Colors.grey,
-                                      fontSize: 18,
+                                      fontSize: screenHeight * 0.025,
                                     ),
                                   textAlign: TextAlign.center,
                                   ),
@@ -157,14 +146,14 @@ class _HistoryState extends ConsumerState<History> {
                                   .size
                                   .width * 0.9,
                               child: Padding(
-                                padding: const EdgeInsets.only(bottom: 15.0),
+                                padding: EdgeInsets.only(bottom: screenHeight * 0.015),
                                 child: Card(
                                   child: Padding(
-                                    padding: const EdgeInsets.only(
-                                      left: 15.0,
-                                      right: 15.0,
-                                      bottom: 20.0,
-                                      top: 10.0,
+                                    padding: EdgeInsets.only(
+                                        left: screenWidth * 0.04,
+                                        right: screenWidth * 0.04,
+                                        bottom: screenHeight * 0.02,
+                                        top: screenHeight * 0.01
                                     ),
                                     child: Column(
                                       children: [
@@ -179,8 +168,7 @@ class _HistoryState extends ConsumerState<History> {
                                         Row(
                                           children: [
                                             Padding(
-                                              padding: EdgeInsets.only(
-                                                  left: 5.0, top: 10.0),
+                                              padding: EdgeInsets.only(left: screenHeight * 0.01, top: screenHeight * 0.007),
                                               child: Text(
                                                 items[index].originalText,
                                                 style: TextStyle(
@@ -213,8 +201,7 @@ class _HistoryState extends ConsumerState<History> {
                                           ],
                                         ),
                                         Padding(
-                                          padding: const EdgeInsets.only(
-                                              top: 7.0, bottom: 7.0),
+                                          padding: EdgeInsets.only(top: screenHeight * 0.007, bottom: screenHeight * 0.007),
                                           child: Align(
                                             alignment: Alignment.centerRight,
                                             child: SizedBox(
@@ -232,12 +219,11 @@ class _HistoryState extends ConsumerState<History> {
                                                 .translatedText),
                                             Spacer(),
                                             Padding(
-                                              padding: EdgeInsets.only(left: 5),
+                                              padding: EdgeInsets.only(top: screenHeight * 0.005),
                                               child: GestureDetector(
                                                 onTap: () {
                                                   setState(() {
                                                     box.deleteAt(index);
-                                                    //savedItems.removeAt(index);
                                                   });
                                                 },
                                                 child: Icon(
@@ -260,7 +246,7 @@ class _HistoryState extends ConsumerState<History> {
                         );
                      }
                     },
-                  ) //
+                  )
           ],
         ),
       ),

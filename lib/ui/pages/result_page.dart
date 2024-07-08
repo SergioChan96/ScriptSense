@@ -35,17 +35,9 @@ class ResultPage extends ConsumerWidget {
 
   void save(Map<Mat, String> imageList, List<bool> boolList, String currentDate) async {
     final box = Hive.box<HiveTextModel>('scannedTexts');
-    //List<SaveModel> saveList = [];
     Iterable<Mat> mats = imageList.keys;
     for (int i = 0; i < boolList.length; i++) {
       if (boolList[i]) {
-       /* saveList.add(
-            SaveModel(
-                Image.memory(imencode(ImageFormat.jpg.ext, mats.elementAt(i))),
-                imageList[mats.elementAt(i)]!,
-                currentDate
-            )
-        );*/
         String originalText = imageList[mats.elementAt(i)]!;
         String translatedText = await _translate(originalText);
         final hiveTextModel = HiveTextModel(originalText, translatedText, currentDate);
@@ -54,10 +46,6 @@ class ResultPage extends ConsumerWidget {
         // box.add(exampleHiveTextModel);
       }
     }
-
-    /*for (SaveModel save in saveList) {
-      print(save.toString());
-    }*/
   }
 
   @override
@@ -65,6 +53,8 @@ class ResultPage extends ConsumerWidget {
     final resultmodel = ref.watch(resultControllerProvider);
     final resultController = ref.read(resultControllerProvider.notifier);
     var currentDate = DateFormat('d/M/y').format(DateTime.now());
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
 
     if (resultController.AnalysnotStarted) {
       resultController.startAnalysisofImage(image);
@@ -80,28 +70,23 @@ class ResultPage extends ConsumerWidget {
         },
         body: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 0),
-              child: Align(
-                alignment: Alignment.bottomRight,
-                child: InfoButton(
-                  infoText: "Auf dieser Seite werden die Ergebnisse angezeigt, die du zuvor mit der Kamera gescannt hast. Wähle die gewünschten Ergebnisse aus, indem du die entsprechenden Checkboxen anklickst. Übersetze und speichere die ausgewählten Ergebnisse anschließend mit dem Speichern-Button.",
-                ),
+            Align(
+              alignment: Alignment.bottomRight,
+              child: InfoButton(
+                infoText: "Auf dieser Seite werden die Ergebnisse angezeigt, die du zuvor mit der Kamera gescannt hast. Wähle die gewünschten Ergebnisse aus, indem du die entsprechenden Checkboxen anklickst. Übersetze und speichere die ausgewählten Ergebnisse anschließend mit dem Speichern-Button.",
               ),
             ),
-           Container(
-             height: 30,
-           child: Row(
+          Row(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(left: 25.0),
+                  padding: EdgeInsets.only(left: screenWidth * 0.055),
                   child: Container(
-                    width: 120,
-                    height: 30,
+                    width: screenWidth * 0.25,
+                    height: screenHeight * 0.045,
                     child: ElevatedButton(
                       onPressed: () {
-                        //print(resultController.saved);
                         save(resultmodel.identifiedImages, resultController.saved, currentDate);
+                        // stop the matcher
                         HistoryRoute().go(context);
                       },
                       child: Text('Speichern', style: TextStyle(color: Colors.redAccent)),
@@ -123,7 +108,6 @@ class ResultPage extends ConsumerWidget {
                   ),
                 ),
               ],
-            )
            ),
             Expanded(
               child: resultmodel.lines.isEmpty
@@ -135,14 +119,14 @@ class ResultPage extends ConsumerWidget {
                     child: SizedBox(
                       width: MediaQuery.of(context).size.width * 0.9,
                       child: Padding(
-                        padding: const EdgeInsets.only(bottom: 15.0),
+                        padding: EdgeInsets.only(bottom: screenHeight * 0.015),
                         child: Card(
                           child: Padding(
-                            padding: const EdgeInsets.only(
-                              left: 15.0,
-                              right: 15.0,
-                              bottom: 20.0,
-                              top: 10.0
+                            padding: EdgeInsets.only(
+                              left: screenWidth * 0.04,
+                              right: screenWidth * 0.04,
+                              bottom: screenHeight * 0.02,
+                              top: screenHeight * 0.01
                             ),
                             child: Column(
                               children: [
@@ -150,14 +134,17 @@ class ResultPage extends ConsumerWidget {
                                   children: [
                                     Align(
                                       alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        currentDate,
-                                        style: TextStyle(color: Colors.grey),
+                                      child: Padding(
+                                        padding: EdgeInsets.only(bottom: screenHeight * 0.005),
+                                        child: Text(
+                                          currentDate,
+                                          style: TextStyle(color: Colors.grey),
+                                        ),
                                       ),
                                     ),
                                     const Spacer(),
                                     Container(
-                                      padding: EdgeInsets.only(top: 5, right: 0),
+                                      padding: EdgeInsets.only(top: screenHeight * 0.005),
                                       child: CustomCheckbox(
                                         value: resultController.saved[index],
                                         onChanged: (value) {
@@ -172,7 +159,7 @@ class ResultPage extends ConsumerWidget {
                                     Flexible(
                                       child:  Container(
                                         alignment: Alignment.topLeft,
-                                          height: 20.0,
+                                          height: screenHeight * 0.03,
                                           child: FractionallySizedBox(
                                             widthFactor: 1,
                                             heightFactor: 1,
@@ -187,7 +174,7 @@ class ResultPage extends ConsumerWidget {
                                   ],
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.only(top: 7.0, bottom: 7.0),
+                                  padding: EdgeInsets.only(top: screenHeight * 0.007, bottom: screenHeight * 0.007),
                                   child: Align(
                                     alignment: Alignment.centerRight,
                                     child: SizedBox(
@@ -199,7 +186,7 @@ class ResultPage extends ConsumerWidget {
                                 Row(
                                   children: [
                                     Padding(
-                                      padding: EdgeInsets.only(left: 5.0, top: 5.0),
+                                      padding: EdgeInsets.only(left: screenHeight * 0.01, top: screenHeight * 0.007),
                                       child: Align(
                                         alignment: Alignment.centerLeft,
                                         child: resultmodel.identifiedImages.length <= index
@@ -222,8 +209,6 @@ class ResultPage extends ConsumerWidget {
           ],
         ),
       ),
-      _ => Center(child: CircularProgressIndicator()) // needed here ?
-      }
     );
   }
 }

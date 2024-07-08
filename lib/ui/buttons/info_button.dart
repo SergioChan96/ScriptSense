@@ -13,10 +13,13 @@ class _InfoButtonState extends State<InfoButton> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+
     return Align(
         alignment: Alignment.topRight,
         child: Padding(
-        padding: const EdgeInsets.only(right: 10.0, top: 5.0),
+        padding: EdgeInsets.only(right: screenWidth * 0.03),
         child: IconButton(
           icon: const Icon(Icons.info_outline, color: Colors.grey,),
           onPressed: () {

@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:scriptsense/model/result_model.dart';
 import 'package:scriptsense/services/segmenter.dart';
 
-import '../model/save_model.dart'; // needed ?
+import '../model/save_model.dart';
 
 part 'result_controller.g.dart';
 
@@ -18,13 +18,8 @@ part 'result_controller.g.dart';
 class ResultController extends _$ResultController {
   bool AnalysnotStarted = true;
   bool selectAll = false;
-  List<SaveModel> savedItems = []; // needed??
+  List<SaveModel> savedItems = [];
   List<bool> saved = [];
-
-  void clearHistory() { // needed?
-    savedItems.clear();
-    state = state.copyWith();
-  }
 
   void toggleSelectAll() {
     selectAll = !selectAll;
@@ -38,6 +33,7 @@ class ResultController extends _$ResultController {
   ResultModel build() {
     return ResultModel.initial();
   }
+
   Future<void> startAnalysisofImage(String image) async {
     Mat matImage = convertStringtoImage(image);
     Segmenter seg = Segmenter();

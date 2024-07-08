@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter/services.dart';
 
 import 'package:scriptsense/controller/camera_page_controller.dart';
 import 'package:scriptsense/router/typed_routes.dart';
@@ -14,29 +15,28 @@ import 'package:scriptsense/router/typed_routes.dart';
 class CameraPage extends ConsumerWidget {
   const CameraPage({super.key});
 
+
+  Future<Uint8List> loadImage() async {
+    ByteData image = await rootBundle.load('assets/newspaper.jpg');
+    return image.buffer.asUint8List();
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final cameraPageModel = ref.watch(cameraPageControllerProvider);
     final cameraPageController = ref.read(cameraPageControllerProvider.notifier);
+    double screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(MediaQuery.of(context).size.height * 0.05),
+        preferredSize: Size.fromHeight(screenHeight * 0.07),
         child: AppBar(
           backgroundColor: Colors.black,
           iconTheme: IconThemeData(
             color: Colors.white,
           ),
-          actions: [
-            IconButton(
-                onPressed: () {
-                  cameraPageController.loadImage();
-                  ResultRoute(image: base64Encode(cameraPageModel.convertedPic!)).go(context);
-                },
-                icon: Icon(Icons.image)
-            )
-          ],
+          actions: [],
         ),
       ),
       body: Column(
@@ -58,18 +58,23 @@ class CameraPage extends ConsumerWidget {
           ),
           Container(
             color: Colors.black,
-            height: MediaQuery.of(context).size.height * 0.12,
+            height: screenHeight * 0.12,
             child: switch(cameraPageModel.picture) {
               null => Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Spacer(flex: 1),
                   IconButton(
-                      iconSize: MediaQuery.of(context).size.height * 0.08,
-                      onPressed: () {
-                        // set the flash for the photo
+                      iconSize: screenHeight * 0.06,
+                      onPressed: () async {
+                        cameraPageController.controller.dispose();
+                        final image = await loadImage();
+                        context.go('/camera/result:$image');
+                        //ResultRoute(image: base64Encode(await loadImage())).go(context);
+                        //cameraPageController.loadImage();
+                        //ResultRoute(image: base64Encode(cameraPageModel.convertedPic!)).go(context);
                       },
-                      icon: Icon(Icons.flash_on)
+                      icon: Icon(Icons.image)
                   ),
                   Spacer(flex: 1),
                   GestureDetector(
@@ -79,7 +84,7 @@ class CameraPage extends ConsumerWidget {
                     },
                     child: LayoutBuilder(
                       builder: (context, constraints) {
-                        double size = MediaQuery.of(context).size.height * 0.1;
+                        double size = screenHeight * 0.09;
                         return Stack(
                           alignment: Alignment.center,
                           children: [
@@ -110,9 +115,17 @@ class CameraPage extends ConsumerWidget {
                           ]
                         );
                       }
-                    )
+                    ),
                   ),
-                  Spacer(flex: 5)
+                  Spacer(flex: 1),
+                  IconButton(
+                      iconSize: screenHeight * 0.06,
+                      onPressed: () {
+                        // TO DO:  set the flash for the photo
+                      },
+                      icon: Icon(Icons.flash_on)
+                  ),
+                  Spacer(flex: 1)
                 ],
               ),
               _ => Row(

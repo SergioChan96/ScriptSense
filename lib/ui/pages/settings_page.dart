@@ -21,10 +21,11 @@ class Settings extends ConsumerStatefulWidget {
 class _Settings extends ConsumerState<Settings> {
   @override
   Widget build(BuildContext context) {
-   // final String setting;
     final resultController = ref.watch(resultControllerProvider.notifier);
     final themeProvider = provider.Provider.of<ThemeProvider>(context);
     bool isDarkMode = themeProvider.themeMode == ThemeMode.dark;
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
       body: NestedScrollView(
@@ -34,18 +35,18 @@ class _Settings extends ConsumerState<Settings> {
           ];
         },
         body: Padding(
-          padding: const EdgeInsets.only(top: 50.0, left: 20.0, right: 20.0),
+          padding: EdgeInsets.only(top: screenHeight * 0.06, left: screenWidth * 0.02, right: screenWidth * 0.02),
           child: Center (
             child: Column(
               children: [
-                const Padding (
-                  padding: EdgeInsets.only(left: 10.0),
+                Padding (
+                  padding: EdgeInsets.only(left: screenWidth * 0.05),
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
                       "Informationen",
                       style: TextStyle(
-                        fontSize: 17.0,
+                        fontSize: screenWidth * 0.04,
                       ),
                     ),
                   ),
@@ -53,46 +54,46 @@ class _Settings extends ConsumerState<Settings> {
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 0.90,
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
+                    padding: EdgeInsets.only(top: screenHeight * 0.01, bottom: screenHeight * 0.01),
                     child: Card(
                       child: Column(
                         children: [
                           TextButton(
                               onPressed: () { ImpressumRoute().go(context);},
-                              child: Row(
-                                children: [
-                                  Icon(Icons.info_outline, color: Colors.grey, size: 20,),
-                                  Padding(
-                                    padding: EdgeInsets.only(left: 5.0),
-                                    child: Text(
-                                      'Impressum',
-                                      style: TextStyle(
-                                        color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black,
+                              child: Padding(
+                                  padding: EdgeInsets.only(top: screenHeight * 0.01),
+                                  child: Row(
+                                    children: [
+                                      Icon(Icons.info_outline, color: Colors.grey, size: screenHeight * 0.025),
+                                      Padding(
+                                        padding: EdgeInsets.only(left: screenWidth * 0.015),
+                                        child: Text(
+                                          'Impressum',
+                                          style: TextStyle(
+                                            color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black,
+                                          ),
+                                        ),
                                       ),
-                                    ),
-                                  ),
-                                  Spacer(),
-                                  Icon(Icons.arrow_forward_ios, color: Colors.redAccent, size: 20,)
-                                ],
-                              )
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 0.0, bottom: 0.0),
-                            child: Align(
-                              alignment: Alignment.center,
-                              child: SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.8,
-                                child: const Divider(),
+                                      Spacer(),
+                                      Icon(Icons.arrow_forward_ios, color: Colors.redAccent, size: screenHeight * 0.02)
+                                     ],
+                                  )
                               ),
+                          ),
+                         Align(
+                            alignment: Alignment.center,
+                            child: SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.8,
+                              child: const Divider(),
                             ),
                           ),
                           TextButton(
                               onPressed: () { TermsAndConditionsRoute().go(context);},
                               child: Row(
                                 children: [
-                                  Icon(Icons.privacy_tip_outlined, color: Colors.grey, size: 20,),
+                                  Icon(Icons.privacy_tip_outlined, color: Colors.grey, size: screenHeight * 0.025,),
                                   Padding(
-                                    padding: EdgeInsets.only(left: 5.0),
+                                    padding: EdgeInsets.only(left: screenWidth * 0.015),
                                     child: Text(
                                       'Nutzungsbedingungen',
                                       style: TextStyle(
@@ -101,53 +102,52 @@ class _Settings extends ConsumerState<Settings> {
                                     )
                                   ),
                                   Spacer(),
-                                  Icon(Icons.arrow_forward_ios, color: Colors.redAccent, size: 20,)
+                                  Icon(Icons.arrow_forward_ios, color: Colors.redAccent, size: screenHeight * 0.02,)
                                 ],
                               )
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 0.0, bottom: 0.0),
-                            child: Align(
-                              alignment: Alignment.center,
-                              child: SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.8,
-                                child: const Divider(),
-                              ),
+                          Align(
+                            alignment: Alignment.center,
+                            child: SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.8,
+                              child: const Divider(),
                             ),
                           ),
                           TextButton(
                               onPressed: () {TippsAndTricksRoute().go(context);},
-                              child: Row(
-                                children: [
-                                  Icon(Icons.tips_and_updates_outlined, color: Colors.grey, size: 20,),
-                                  Padding(
-                                    padding: EdgeInsets.only(left: 5.0),
-                                    child: Text(
-                                      'Tipps und Tricks',
-                                      style: TextStyle(
-                                        color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black,
-                                      ),
-                                    )
-                                  ),
-                                  Spacer(),
-                                  Icon(Icons.arrow_forward_ios, color: Colors.redAccent, size: 20,)
-                                ],
-                              )
+                              child: Padding(
+                                  padding: EdgeInsets.only(bottom: screenHeight * 0.01),
+                                  child:Row(
+                                      children: [
+                                        Icon(Icons.tips_and_updates_outlined, color: Colors.grey, size: screenHeight * 0.025,),
+                                        Padding(
+                                          padding: EdgeInsets.only(left: screenWidth * 0.015),
+                                          child: Text(
+                                            'Tipps und Tricks',
+                                            style: TextStyle(
+                                              color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black,
+                                            ),
+                                          )
+                                        ),
+                                        Spacer(),
+                                        Icon(Icons.arrow_forward_ios, color: Colors.redAccent, size: screenHeight * 0.02,)
+                                      ],
+                                  )
+                              ),
                           ),
                         ],
                       ),
                     ),
                   ),
                 ),
-
-                const Padding (
-                  padding: EdgeInsets.only(left: 10.0, top: 30.0),
+                Padding (
+                  padding: EdgeInsets.only(left: screenWidth * 0.05, top: screenHeight * 0.05),
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
                         "Generelle Einstellungen",
                         style: TextStyle(
-                          fontSize: 17.0,
+                          fontSize: screenWidth * 0.04,
                         ),
                     ),
                   ),
@@ -155,19 +155,19 @@ class _Settings extends ConsumerState<Settings> {
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 0.90,
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
+                    padding: EdgeInsets.only(top: screenHeight * 0.01, bottom: screenHeight * 0.01),
                     child: Card(
                       child: Column(
                         children: [
                           Container(
-                            margin: const EdgeInsets.only(top: 5.0),
+                            margin: EdgeInsets.only(top: screenHeight * 0.005),
                             child: TextButton(
                                 onPressed: () {},
                                 child: Row(
                                   children: [
-                                    Icon(Icons.dark_mode_outlined, color: Colors.grey, size: 20,),
+                                    Icon(Icons.dark_mode_outlined, color: Colors.grey, size: screenHeight * 0.025,),
                                     Padding(
-                                      padding: EdgeInsets.only(left: 5.0),
+                                      padding: EdgeInsets.only(left: screenWidth * 0.015),
                                       child: Text(
                                         'Darkmode',
                                         style: TextStyle(
@@ -194,23 +194,22 @@ class _Settings extends ConsumerState<Settings> {
                                 )
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 0.0, bottom: 0.0),
-                            child: Align(
-                              alignment: Alignment.center,
-                              child: SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.8,
-                                child: const Divider(),
-                              ),
+                           Align(
+                            alignment: Alignment.center,
+                            child: SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.8,
+                              child: const Divider(),
                             ),
                           ),
                           TextButton(
                               onPressed: () { MoreSettingsRoute().go(context);},
-                              child: Row(
+                              child: Padding(
+                                  padding: EdgeInsets.only(bottom: screenHeight * 0.01),
+                                  child: Row(
                                 children: [
-                                  Icon(Icons.question_mark_outlined, color: Colors.grey, size: 20,),
+                                  Icon(Icons.question_mark_outlined, color: Colors.grey, size: screenHeight * 0.025,),
                                   Padding(
-                                    padding: EdgeInsets.only(left: 5.0),
+                                    padding: EdgeInsets.only(left: screenWidth * 0.015),
                                     child: Text(
                                       'Weitere Einstellung',
                                       style: TextStyle(
@@ -219,8 +218,9 @@ class _Settings extends ConsumerState<Settings> {
                                     )
                                   ),
                                   Spacer(),
-                                  Icon(Icons.arrow_forward_ios, color: Colors.redAccent, size: 20,)
+                                  Icon(Icons.arrow_forward_ios, color: Colors.redAccent, size: screenHeight * 0.02,)
                                 ],
+                              )
                               )
                           ),
                         ],
@@ -231,12 +231,12 @@ class _Settings extends ConsumerState<Settings> {
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 0.90,
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 35.0, bottom: 10.0),
+                    padding: EdgeInsets.only(top: screenHeight * 0.035, bottom: screenHeight * 0.01),
                     child: Card(
                       child: Column(
                         children: [
                           Container(
-                            margin: const EdgeInsets.only(top: 5.0),
+                            margin: EdgeInsets.only(top: screenHeight * 0.005),
                             child: TextButton(
                                 onPressed: () {
                                   showDialog(
@@ -255,7 +255,6 @@ class _Settings extends ConsumerState<Settings> {
                                           TextButton(
                                             child: Text('Historie löschen', style: TextStyle(color: Colors.redAccent)),
                                             onPressed: () async {
-                                              //final box = Hive.box<HiveTextModel>('scannedTexts');
                                               final box = await Hive.openBox<HiveTextModel>('scannedTexts');
                                               await box.clear();
                                               Navigator.of(context).pop();
@@ -266,11 +265,11 @@ class _Settings extends ConsumerState<Settings> {
                                     },
                                   );
                                 },
-                                child: const Row(
+                                child: Row(
                                   children: [
-                                    Icon(Icons.cleaning_services_outlined, color: Colors.redAccent, size: 20,),
+                                    Icon(Icons.cleaning_services_outlined, color: Colors.redAccent, size: screenHeight * 0.025,),
                                     Padding(
-                                      padding: EdgeInsets.only(left: 5.0),
+                                      padding: EdgeInsets.only(left: screenWidth * 0.015),
                                       child: Text('Historie löschen', style: TextStyle(color: Colors.redAccent)),
                                     ),
                                   ],

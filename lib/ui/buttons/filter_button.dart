@@ -18,9 +18,12 @@ class _FilterButtonState extends State<FilterButton> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+
     return Container(
-      width: 75,
-      height: 40,
+      width: screenWidth * 0.2,
+      height: screenHeight * 0.05,
       alignment: Alignment.center,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
@@ -31,7 +34,7 @@ class _FilterButtonState extends State<FilterButton> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.menu, size: 20, color: showOnlyFavorites || sortDateAscending || sortDateDescending ? Colors.redAccent : Colors.grey.shade700),
+              Icon(Icons.menu, size: screenHeight * 0.03, color: showOnlyFavorites || sortDateAscending || sortDateDescending ? Colors.redAccent : Colors.grey.shade700),
             ],
           ),
           onSelected: (String? newValue) {
@@ -66,7 +69,7 @@ class _FilterButtonState extends State<FilterButton> {
                   Icon(showOnlyFavorites ? Icons.favorite : Icons.favorite_border,
                     color: showOnlyFavorites ? Colors.redAccent : Colors.grey[700],
                   ),
-                  SizedBox(width: 8),
+                  SizedBox(width: screenWidth * 0.02),
                   Text('Meine Favoriten', style: TextStyle(color: Colors.grey[700])),
                 ],
               ),
@@ -78,7 +81,7 @@ class _FilterButtonState extends State<FilterButton> {
                   Icon(Icons.arrow_upward,
                     color: sortDateAscending ? Colors.redAccent : Colors.grey[700],
                   ),
-                  SizedBox(width: 8),
+                  SizedBox(width: screenWidth * 0.02),
                   Text('Datum aufsteigend', style: TextStyle(color: Colors.grey[700])),
                 ],
               ),
@@ -90,7 +93,7 @@ class _FilterButtonState extends State<FilterButton> {
                   Icon(Icons.arrow_downward,
                     color: sortDateDescending ? Colors.redAccent : Colors.grey[700],
                   ),
-                  SizedBox(width: 8),
+                  SizedBox(width: screenWidth * 0.02),
                   Text('Datum absteigend', style: TextStyle(color: Colors.grey[700])),
                 ],
               ),

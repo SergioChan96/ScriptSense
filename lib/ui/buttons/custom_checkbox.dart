@@ -9,13 +9,16 @@ class CustomCheckbox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+
     return InkWell(
       onTap: () {
         onChanged?.call(!value);
       },
       child: Container(
-        width: 20,
-        height: 20,
+        width: screenWidth * 0.05,
+        height: screenWidth * 0.05,
         alignment: Alignment.center,
         decoration: BoxDecoration(
           shape: BoxShape.rectangle,
@@ -23,7 +26,7 @@ class CustomCheckbox extends StatelessWidget {
           border: Border.all(color: value ? Colors.redAccent : Colors.grey, width: 2.0),
         ),
         child: value
-            ? Icon(Icons.check, color: Colors.redAccent, size: 20 * 0.8)
+            ? Icon(Icons.check, color: Colors.redAccent, size: screenWidth * 0.05 * 0.8)
             : null,
       ),
     );
