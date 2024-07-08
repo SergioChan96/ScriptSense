@@ -67,10 +67,10 @@ class CameraPage extends ConsumerWidget {
                   IconButton(
                       iconSize: screenHeight * 0.06,
                       onPressed: () async {
-                        cameraPageController.controller.dispose();
                         final image = await loadImage();
-                        context.go('/camera/result:$image');
-                        //ResultRoute(image: base64Encode(await loadImage())).go(context);
+                        cameraPageController.controller.dispose();
+                        //context.go('/camera/result:$image');
+                        ResultRoute(image: base64Encode(image)).go(context);
                         //cameraPageController.loadImage();
                         //ResultRoute(image: base64Encode(cameraPageModel.convertedPic!)).go(context);
                       },

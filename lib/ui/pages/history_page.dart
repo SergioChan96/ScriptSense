@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive/hive.dart';
@@ -8,6 +10,7 @@ import 'package:scriptsense/ui/buttons/filter_button.dart';
 import 'package:scriptsense/ui/components/bottom_nav_bar.dart';
 import 'package:scriptsense/ui/components/header.dart';
 import '../../model/hive_text_model.dart';
+import '../../services/hive_provider.dart';
 
 class History extends ConsumerStatefulWidget {
   const History({Key? key}) : super(key: key);
@@ -17,13 +20,15 @@ class History extends ConsumerStatefulWidget {
 }
 
 class _HistoryState extends ConsumerState<History> {
+  bool _isInitialized = false;
   bool showOnlyFavorites = false;
   bool sortDateAscending = false;
   bool sortDateDescending = true;
   String? dropdownValue = 'Meine Favoriten';
   List<bool> isHeartFilled = [];
   List<HiveTextModel> savedItems = [];
-  late Box<HiveTextModel> box;
+  Box<HiveTextModel>? box;
+  late StreamSubscription<BoxEvent> _boxSubscription;
 
   @override
   void initState() {
@@ -32,23 +37,41 @@ class _HistoryState extends ConsumerState<History> {
   }
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    initHive();
+  void dispose() {
+    _boxSubscription.cancel();
+    super.dispose();
   }
 
   Future<void> initHive() async {
-     box = await Hive.openBox<HiveTextModel>('scannedTexts');
-     isHeartFilled = List<bool>.filled(box.length, false);
+    box = await Hive.openBox<HiveTextModel>('scannedTexts');
+
+  }
+
+  Future<void> updateSavedItems() async {
+    if (box != null) {
+      savedItems = box!.values.toList();
+      isHeartFilled = List<bool>.filled(savedItems.length, false);
+      _isInitialized = true;
+      if (mounted) {
+        setState(() {});
+      }
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    final boxAsyncValue = ref.watch(hiveBoxProvider);
+
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      body: NestedScrollView(
+      body: boxAsyncValue.when(
+          loading: () => Center(child: CircularProgressIndicator()),
+          error: (error, stackTrace) => Text('Error: $error'),
+          data: (box) {
+            List<HiveTextModel> items = box.values.toList();
+          return NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
             const Header(title: 'Historie'),
@@ -87,168 +110,142 @@ class _HistoryState extends ConsumerState<History> {
                 ),
               ],
             ),
-      FutureBuilder(
-                    future: initHive(),
-                    builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return CircularProgressIndicator();
-                      } else if (snapshot.hasError) {
-                        return Text('Error: ${snapshot.error}');
-                      } else if (box.isEmpty){
-                        return Center(
+            box.isEmpty
+                ? Center(
+              child: Padding(
+                padding: EdgeInsets.only(top: screenHeight * 0.05),
+                child: FractionallySizedBox(
+                  widthFactor: 0.8,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.history,
+                        size: screenHeight * 0.065,
+                        color: Colors.grey,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: screenHeight * 0.01),
+                        child: Text(
+                          'Noch keine gescannten Übersetzungen',
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: screenHeight * 0.025,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            )
+                : Expanded(
+              child: ListView.builder(
+                itemCount: items.length,
+                itemBuilder: (BuildContext context, int index) {
+                  if (showOnlyFavorites && !items[index].isFavorite) {
+                    return Container();
+                  }
+                  return Center(
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      child: Padding(
+                        padding: EdgeInsets.only(bottom: screenHeight * 0.015),
+                        child: Card(
                           child: Padding(
-                            padding: EdgeInsets.only(top: screenHeight * 0.05),
-                          child: FractionallySizedBox(
-                            widthFactor: 0.8,
+                            padding: EdgeInsets.only(
+                              left: screenWidth * 0.04,
+                              right: screenWidth * 0.04,
+                              bottom: screenHeight * 0.02,
+                              top: screenHeight * 0.01,
+                            ),
                             child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Icon(
-                                  Icons.history,
-                                  size: screenHeight * 0.065,
-                                  color: Colors.grey,
-                                ),
-                                Padding (
-                                  padding: EdgeInsets.only(top: screenHeight * 0.01),
+                                Align(
+                                  alignment: Alignment.centerLeft,
                                   child: Text(
-                                    'Noch keine gescannten Übersetzungen',
-                                    style: TextStyle(
-                                      color: Colors.grey,
-                                      fontSize: screenHeight * 0.025,
-                                    ),
-                                  textAlign: TextAlign.center,
+                                    items[index].scanDate,
+                                    style: TextStyle(color: Colors.grey),
                                   ),
+                                ),
+                                Row(
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(left: screenHeight * 0.01, top: screenHeight * 0.007),
+                                      child: Text(
+                                        items[index].originalText,
+                                        style: TextStyle(fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                    const Spacer(),
+                                    Container(
+                                      padding: EdgeInsets.zero,
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          setState(() {
+                                            var item = items[index];
+                                            var updatedItem = HiveTextModel(
+                                              item.originalText,
+                                              item.translatedText,
+                                              item.scanDate,
+                                              isFavorite: !item.isFavorite,
+                                            );
+                                            box.putAt(index, updatedItem);
+                                          });
+                                        },
+                                        child: Icon(
+                                          items[index].isFavorite ? Icons.favorite : Icons.favorite_border,
+                                          color: items[index].isFavorite ? Colors.redAccent : Colors.grey,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(top: screenHeight * 0.007, bottom: screenHeight * 0.007),
+                                  child: Align(
+                                    alignment: Alignment.centerRight,
+                                    child: SizedBox(
+                                      width: MediaQuery.of(context).size.width,
+                                      child: const Divider(),
+                                    ),
+                                  ),
+                                ),
+                                Row(
+                                  children: [
+                                    Text(items[index].translatedText),
+                                    Spacer(),
+                                    Padding(
+                                      padding: EdgeInsets.only(top: screenHeight * 0.005),
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          setState(() {
+                                            box!.deleteAt(index);
+                                          });
+                                        },
+                                        child: Icon(
+                                          Icons.delete,
+                                          color: Colors.grey,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
                           ),
-                          ),
-                        );
-                      } else {
-                        var items = box.values.toList();
-                        items.sort((a, b) {
-                          var dateA = DateFormat('d/M/y').parse(a.scanDate);
-                          var dateB = DateFormat('d/M/y').parse(b.scanDate);
-                          return sortDateAscending ? dateA.compareTo(dateB) : dateB.compareTo(dateA);
-                        });
-                        return Expanded(
-                        child: ListView.builder(
-                        itemCount: box.length,
-                        itemBuilder: (BuildContext context, int index)
-                        {
-                          if (showOnlyFavorites && !items[index].isFavorite) {
-                            return Container();
-                          }
-                          return Center(
-                            child: SizedBox(
-                              width: MediaQuery
-                                  .of(context)
-                                  .size
-                                  .width * 0.9,
-                              child: Padding(
-                                padding: EdgeInsets.only(bottom: screenHeight * 0.015),
-                                child: Card(
-                                  child: Padding(
-                                    padding: EdgeInsets.only(
-                                        left: screenWidth * 0.04,
-                                        right: screenWidth * 0.04,
-                                        bottom: screenHeight * 0.02,
-                                        top: screenHeight * 0.01
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        Align(
-                                          alignment: Alignment.centerLeft,
-                                          child: Text(
-                                            items[index].scanDate,
-                                            style: TextStyle(
-                                                color: Colors.grey),
-                                          ),
-                                        ),
-                                        Row(
-                                          children: [
-                                            Padding(
-                                              padding: EdgeInsets.only(left: screenHeight * 0.01, top: screenHeight * 0.007),
-                                              child: Text(
-                                                items[index].originalText,
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight
-                                                        .bold),
-                                              ),
-                                            ),
-                                            const Spacer(),
-                                            Container(
-                                              padding: EdgeInsets.zero,
-                                              child: GestureDetector(
-                                                onTap: () {
-                                                  setState(() {
-                                                    var item = box.getAt(index);
-                                                    var updatedItem = HiveTextModel(
-                                                      item!.originalText,
-                                                      item.translatedText,
-                                                      item.scanDate,
-                                                      isFavorite: !item.isFavorite,
-                                                    );
-                                                    box.putAt(index, updatedItem);
-                                                  });
-                                                },
-                                                child: Icon(
-                                                  box.getAt(index)!.isFavorite ? Icons.favorite : Icons.favorite_border,
-                                                  color: box.getAt(index)!.isFavorite ? Colors.redAccent : Colors.grey,
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.only(top: screenHeight * 0.007, bottom: screenHeight * 0.007),
-                                          child: Align(
-                                            alignment: Alignment.centerRight,
-                                            child: SizedBox(
-                                              width: MediaQuery
-                                                  .of(context)
-                                                  .size
-                                                  .width,
-                                              child: const Divider(),
-                                            ),
-                                          ),
-                                        ),
-                                        Row(
-                                          children: [
-                                            Text(items[index]
-                                                .translatedText),
-                                            Spacer(),
-                                            Padding(
-                                              padding: EdgeInsets.only(top: screenHeight * 0.005),
-                                              child: GestureDetector(
-                                                onTap: () {
-                                                  setState(() {
-                                                    box.deleteAt(index);
-                                                  });
-                                                },
-                                                child: Icon(
-                                                  Icons.delete,
-                                                  color: Colors.grey,
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          );
-                        }
-                      )
-                        );
-                     }
-                    },
-                  )
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
           ],
         ),
+      );
+          }
       ),
       bottomNavigationBar: BottomNavBar(
         selectedIndex: 1,
