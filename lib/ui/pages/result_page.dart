@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
@@ -81,4 +79,10 @@ class ResultPage extends ConsumerWidget {
       }
     );
   }
+}
+abstract class IResultController {
+  Future<void> startAnalysisofImage(String image);
+  Mat convertStringtoImage(String image);
+  Future<void> debugLines();
+  void toggle(int index);
 }

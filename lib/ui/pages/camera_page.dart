@@ -147,3 +147,10 @@ class CameraPage extends ConsumerWidget {
     );
   }
 }
+abstract class ICameraPageController {
+  void init();
+  void takePicture();
+  Future<void> loadImage();
+  Future<void> saveImage();
+  void discardPic();
+}
