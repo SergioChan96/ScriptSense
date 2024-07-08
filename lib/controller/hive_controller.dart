@@ -9,10 +9,26 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:scriptsense/model/hive_text_model.dart';
 
-//part 'hive_controller.g.dart';
+part 'hive_controller.g.dart';
 
-/*class HiveController extends StateNotifier<List<HiveTextModel>> {
-  HiveController() : super([]);
+@riverpod
+class HiveController extends _$HiveController {
+
+  bool hasStarted = false;
+  Box<HiveTextModel>? box;
+
+  @override
+  List<HiveTextModel> build() {
+    return [];
+  }
+
+  Future<void> init() async {
+    if(!hasStarted) {
+      box = await Hive.openBox<HiveTextModel>('scannedTexts');
+      state = box!.values.toList();
+      hasStarted = true;
+    }
+  }
 
   Future<void> loadItems() async {
     final box = await Hive.openBox<HiveTextModel>('scannedTexts');
@@ -24,8 +40,10 @@ import 'package:scriptsense/model/hive_text_model.dart';
     await box.add(item);
     state = box.values.toList();
   }
-}*/
 
+}
+
+/*
 
 final hiveTextModelProvider = StateNotifierProvider<HiveTextModelNotifier, List<HiveTextModel>>((ref) {
   return HiveTextModelNotifier();
@@ -58,4 +76,6 @@ class HiveTextModelNotifier extends StateNotifier<List<HiveTextModel>> {
     state = box?.values.toList() ?? [];
   }
 }
+
+ */
 
