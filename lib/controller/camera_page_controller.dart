@@ -13,6 +13,7 @@ part "camera_page_controller.g.dart";
 class CameraPageController extends _$CameraPageController {
   late CameraController controller;
   bool initStarted = false;
+  bool saveImageBool = false;
   @override
   CameraPageModel build() {
     return CameraPageModel.initial();
@@ -35,6 +36,7 @@ class CameraPageController extends _$CameraPageController {
   void takePicture() async {
     XFile pic = await controller.takePicture();
     Uint8List bytes = await pic.readAsBytes();
+    saveImageBool = true;
     state = state.copyWith(picture: pic, convertedPic: bytes);
   }
 
@@ -50,10 +52,13 @@ class CameraPageController extends _$CameraPageController {
   }
 
   Future<void> saveImage() async {
-    await Gal.putImageBytes(await state.picture!.readAsBytes());
+    if (saveImageBool) {
+      await Gal.putImageBytes(await state.picture!.readAsBytes());
+    }
   }
 
   void discardPic() {
+    saveImageBool = false;
     state = state.copyWith(picture: null, convertedPic: null);
   }
 }

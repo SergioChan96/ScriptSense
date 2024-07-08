@@ -35,7 +35,8 @@ class ResultPage extends ConsumerWidget {
     final resultmodel = ref.watch(resultControllerProvider);
     final resultController = ref.read(resultControllerProvider.notifier);
     if(resultController.AnalysnotStarted) {
-      resultController.startAnalysisofImage(image);
+      resultController.debugLines();
+      //resultController.startAnalysisofImage(image);
       resultController.AnalysnotStarted = false;
     }
     return Scaffold(

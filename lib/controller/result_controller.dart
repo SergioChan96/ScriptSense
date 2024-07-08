@@ -37,6 +37,7 @@ class ResultController extends _$ResultController {
   Future<void> debugLines() async {
     Segmenter seg = Segmenter();
     List<Mat> lines = await seg.segmentImage(await seg.loadImage());
+    saved = List.filled(lines.length, false);
     List<Mat> debug = [];
     for (Mat line in lines) {
       debug.add(seg.debugDetect(line));
