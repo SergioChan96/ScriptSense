@@ -1,6 +1,9 @@
+
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:scriptsense/ui/pages/camera_page.dart';
 import 'package:scriptsense/ui/pages/sub_settings/terms_and_condition.dart';
 import 'package:scriptsense/ui/pages/sub_settings/tipps_and_tricks.dart';
 import 'package:scriptsense/ui/pages/history_page.dart';
@@ -9,16 +12,15 @@ import 'package:scriptsense/ui/pages/home_page.dart';
 import 'package:scriptsense/ui/pages/settings_page.dart';
 import 'package:scriptsense/ui/pages/result_page.dart';
 import 'package:scriptsense/ui/pages/sub_settings/more_settings.dart';
-
-import '../ui/pages/sub_settings/impressum.dart';
+import 'package:scriptsense/ui/pages/sub_settings/impressum.dart';
 
 part 'typed_routes.g.dart';
 
 @TypedGoRoute<HomeRoute>(
   path: '/',
   routes: [
-    TypedGoRoute<ResultRoute>(
-      path: 'result',
+    TypedGoRoute<CameraRoute>(
+      path: 'camera',
     ),
   ],
 )
@@ -31,10 +33,27 @@ class HomeRoute extends GoRouteData {
 }
 
 @immutable
-class ResultRoute extends GoRouteData {
+class CameraRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    return ResultPage();
+    return CameraPage();
+  }
+}
+
+@TypedGoRoute<ResultRoute>(
+  path: "/result:image",
+)
+@immutable
+class ResultRoute extends GoRouteData {
+  final String image;
+
+  const ResultRoute({
+    required this.image,
+  });
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return ResultPage(image);
   }
 }
 

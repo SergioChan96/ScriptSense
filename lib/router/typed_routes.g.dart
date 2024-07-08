@@ -8,6 +8,7 @@ part of 'typed_routes.dart';
 
 List<RouteBase> get $appRoutes => [
       $homeRoute,
+      $resultRoute,
       $historyRoute,
       $translationRoute,
       $settingsRoute,
@@ -18,8 +19,8 @@ RouteBase get $homeRoute => GoRouteData.$route(
       factory: $HomeRouteExtension._fromState,
       routes: [
         GoRouteData.$route(
-          path: 'result',
-          factory: $ResultRouteExtension._fromState,
+          path: 'camera',
+          factory: $CameraRouteExtension._fromState,
         ),
       ],
     );
@@ -41,11 +42,35 @@ extension $HomeRouteExtension on HomeRoute {
   void replace(BuildContext context) => context.replace(location);
 }
 
-extension $ResultRouteExtension on ResultRoute {
-  static ResultRoute _fromState(GoRouterState state) => ResultRoute();
+extension $CameraRouteExtension on CameraRoute {
+  static CameraRoute _fromState(GoRouterState state) => CameraRoute();
 
   String get location => GoRouteData.$location(
-        '/result',
+        '/camera',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $resultRoute => GoRouteData.$route(
+      path: '/result:image',
+      factory: $ResultRouteExtension._fromState,
+    );
+
+extension $ResultRouteExtension on ResultRoute {
+  static ResultRoute _fromState(GoRouterState state) => ResultRoute(
+        image: state.pathParameters['image']!,
+      );
+
+  String get location => GoRouteData.$location(
+        '/result${Uri.encodeComponent(image)}',
       );
 
   void go(BuildContext context) => context.go(location);

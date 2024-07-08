@@ -1,8 +1,11 @@
+import 'dart:typed_data';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:opencv_dart/opencv_dart.dart';
-import 'package:intl/intl.dart';
+import 'package:intl/intl.dart'; // needed ??
 
 import 'package:scriptsense/controller/result_controller.dart';
 import '../../model/hive_text_model.dart';
@@ -15,7 +18,8 @@ import '../components/header.dart';
 final TranslationService _translationService = TranslationService();
 
 class ResultPage extends ConsumerWidget {
-  const ResultPage({super.key});
+  const ResultPage(this.image, {super.key});
+  final String image;
 
   Future<String> _translate(String result) async {
     try {
@@ -63,7 +67,7 @@ class ResultPage extends ConsumerWidget {
     var currentDate = DateFormat('d/M/y').format(DateTime.now());
 
     if (resultController.AnalysnotStarted) {
-      resultController.startAnalysisofImage();
+      resultController.startAnalysisofImage(image);
       resultController.AnalysnotStarted = false;
     }
 
@@ -218,6 +222,8 @@ class ResultPage extends ConsumerWidget {
           ],
         ),
       ),
+      _ => Center(child: CircularProgressIndicator()) // needed here ?
+      }
     );
   }
 }
