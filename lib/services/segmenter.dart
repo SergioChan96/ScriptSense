@@ -30,7 +30,7 @@ class Segmenter {
       Rect r = boundingRect(contour);
       int x = r.x*2; int y = r.y*2; int w = r.width*2; int h = r.height*2;
       if (2*h < w && w > 10 && h > 10) {
-        rects.add(Rect(x,y,w,h));
+        rects.add(Rect(x-1,y-1,w+1,h+1));
       }
     }
     List<Mat> crops = [];
@@ -49,7 +49,7 @@ class Segmenter {
     List<Rect> rects = [];
     Mat resized = interpolateDown(line);
     Mat kernel = Mat.ones(2,2, MatType.CV_8SC1);
-    Mat imageDilation = erode(resized, kernel, iterations: 2);
+    Mat imageDilation = erode(resized, kernel, iterations: 1);
     Mat flippedImg = bitwiseNOT(imageDilation);
     (double, Mat) result = threshold(flippedImg, 127, 255, 0);
     (VecVecPoint, Mat) contoursR = findContours(result.$2, RETR_TREE, CHAIN_APPROX_SIMPLE);
@@ -127,9 +127,10 @@ class Segmenter {
   Mat debugDetect(Mat line) {
     List<Rect> rects = [];
     Mat resized = interpolateDown(line);
-    Mat kernel = Mat.ones(2,2, MatType.CV_8SC1);
-    Mat imageDilation = erode(resized, kernel, iterations: 2);
+    Mat kernel = Mat.ones(3,5, MatType.CV_8SC1);
+    Mat imageDilation = erode(resized, kernel, iterations: 1);
     Mat flippedImg = bitwiseNOT(imageDilation);
+    flippedImg = copyMakeBorder(flippedImg, 2, 2, 2, 2, BORDER_CONSTANT, value: Scalar.black);
     (double, Mat) result = threshold(flippedImg, 127, 255, 0);
     (VecVecPoint, Mat) contoursR = findContours(result.$2, RETR_TREE, CHAIN_APPROX_SIMPLE);
     VecVecPoint contours = contoursR.$1;
@@ -141,7 +142,7 @@ class Segmenter {
       Rect r = boundingRect(contour);
       int x = r.x*2; int y = r.y*2; int w = r.width*2; int h = r.height*2;
 
-      line = rectangle(line, Rect(x,y,w,h), Scalar.black);
+      line = rectangle(line, Rect(x-4,y-4,w,h), Scalar.black);
       if (w > 10 && h > 10) {
         rects.add(Rect(x,y,w,h));
       }
