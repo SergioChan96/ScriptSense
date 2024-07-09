@@ -8,9 +8,6 @@ part 'hive_controller.g.dart';
 @riverpod
 class HiveController extends _$HiveController {
 
-  bool hasStarted = false;
-  Box<HiveTextModel>? box;
-
   @override
   Future<Box<HiveTextModel>> build() async {
     return await Hive.openBox<HiveTextModel>('scannedTexts');

@@ -1,56 +1,24 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'package:opencv_dart/opencv_dart.dart';
-import 'package:intl/intl.dart'; // needed ??
 
 import 'package:scriptsense/controller/result_controller.dart';
-import '../../model/hive_text_model.dart';
 import '../../router/typed_routes.dart';
-import '../../services/translation_service.dart';
 import '../buttons/custom_checkbox.dart';
 import '../buttons/info_button.dart';
 import '../components/header.dart';
 
-final TranslationService _translationService = TranslationService();
+
 
 class ResultPage extends ConsumerWidget {
   const ResultPage(this.image, {super.key});
   final String image;
-
-  Future<String> _translate(String result) async {
-    try {
-      final translatedText = await _translationService.translate('zh-CN', 'de', result);
-      return translatedText;
-    } catch (e, s) {
-      print('Failed to translate text: $e');
-      print('Error Type: ${e.runtimeType}');
-      print('Stack trace: $s');
-      return result;
-    }
-  }
-
-  void save(Map<Mat, String> imageList, List<bool> boolList, String currentDate) async {
-    final box = Hive.box<HiveTextModel>('scannedTexts');
-    Iterable<Mat> mats = imageList.keys;
-    for (int i = 0; i < boolList.length; i++) {
-      if (boolList[i]) {
-        String originalText = imageList[mats.elementAt(i)]!;
-        String translatedText = await _translate(originalText);
-        final hiveTextModel = HiveTextModel(originalText, translatedText, currentDate);
-        // final exampleHiveTextModel = HiveTextModel("lol", "xD", "31/12/2023"); for testing the date sorting filter
-        box.add(hiveTextModel);
-        // box.add(exampleHiveTextModel);
-      }
-    }
-  }
-
+  
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final resultmodel = ref.watch(resultControllerProvider);
     final resultController = ref.read(resultControllerProvider.notifier);
-    var currentDate = DateFormat('d/M/y').format(DateTime.now());
+
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
 
@@ -83,7 +51,7 @@ class ResultPage extends ConsumerWidget {
                     height: screenHeight * 0.045,
                     child: ElevatedButton(
                       onPressed: () {
-                        save(resultmodel.identifiedImages, resultController.saved, currentDate);
+                        resultController.save();
                         // stop the matcher
                         HistoryRoute().go(context);
                       },
@@ -135,7 +103,7 @@ class ResultPage extends ConsumerWidget {
                                       child: Padding(
                                         padding: EdgeInsets.only(bottom: screenHeight * 0.005),
                                         child: Text(
-                                          currentDate,
+                                          resultController.currentDate,
                                           style: TextStyle(color: Colors.grey),
                                         ),
                                       ),
@@ -146,7 +114,7 @@ class ResultPage extends ConsumerWidget {
                                       child: CustomCheckbox(
                                         value: resultController.saved[index],
                                         onChanged: (value) {
-                                          resultController.toggle(index, currentDate);
+                                          resultController.toggle(index);
                                         },
                                       ),
                                     ),
@@ -215,5 +183,6 @@ abstract class IResultController {
   Future<void> startAnalysisofImage(String image);
   Mat convertStringtoImage(String image);
   Future<void> debugLines();
-  void toggle(int index, String date);
+  void toggle(int index);
+  void save();
 }

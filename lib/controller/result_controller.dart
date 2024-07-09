@@ -1,17 +1,19 @@
 import 'dart:convert';
 import 'dart:typed_data';
-import 'dart:ui';
 
+import 'package:hive/hive.dart';
 import 'package:opencv_dart/opencv_dart.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import 'package:scriptsense/model/result_model.dart';
 import 'package:scriptsense/services/segmenter.dart';
 import 'package:scriptsense/ui/pages/result_page.dart';
 
+import '../model/hive_text_model.dart';
 import '../model/save_model.dart';
+import '../services/translation_service.dart';
 
 part 'result_controller.g.dart';
 
@@ -21,6 +23,7 @@ class ResultController extends _$ResultController implements IResultController {
   bool selectAll = false;
   List<SaveModel> savedItems = [];
   List<bool> saved = [];
+  final String currentDate = DateFormat('d/M/y').format(DateTime.now());
 
   void toggleSelectAll() {
     selectAll = !selectAll;
@@ -64,14 +67,41 @@ class ResultController extends _$ResultController implements IResultController {
     state = state.copyWith(lines: debug);
   }
 
+  Future<String> _translate(String result) async {
+    final TranslationService _translationService = TranslationService();
+    try {
+      final translatedText = await _translationService.translate('zh-CN', 'de', result);
+      return translatedText;
+    } catch (e, s) {
+      print('Failed to translate text: $e');
+      print('Error Type: ${e.runtimeType}');
+      print('Stack trace: $s');
+      return result;
+    }
+  }
+  @override
+  void save() async {
+    final box = Hive.box<HiveTextModel>('scannedTexts');
+    Iterable<Mat> mats = state.identifiedImages.keys;
+    for (int i = 0; i < saved.length; i++) {
+      if (saved[i]) {
+        String originalText = state.identifiedImages[mats.elementAt(i)]!;
+        String translatedText = await _translate(originalText);
+        final hiveTextModel = HiveTextModel(originalText, translatedText, currentDate);
+        // final exampleHiveTextModel = HiveTextModel("lol", "xD", "31/12/2023"); for testing the date sorting filter
+        box.add(hiveTextModel);
+        // box.add(exampleHiveTextModel);
+      }
+    }
+  }
+
 
   @override
-  void toggle(int index, String date) {
+  void toggle(int index) {
     List<Mat> keys = state.identifiedImages.keys.toList();
     Mat mat = keys[index];
     String identifiedImage = state.identifiedImages[mat]!;
-
-    SaveModel item = SaveModel(Image.memory(imencode(ImageFormat.jpg.ext, mat)), identifiedImage, date);
+    SaveModel item = SaveModel(Image.memory(imencode(ImageFormat.jpg.ext, mat)), identifiedImage, currentDate);
     savedItems.add(item);
     state = state.copyWith();
     saved[index] = !saved[index];
