@@ -1,137 +1,213 @@
-import 'package:scriptsense/ui/buttons/filter_button.dart';
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive/hive.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:scriptsense/controller/hive_controller.dart';
 
 import 'package:scriptsense/ui/buttons/info_button.dart';
+import 'package:scriptsense/ui/buttons/filter_button.dart';
 import 'package:scriptsense/ui/components/bottom_nav_bar.dart';
 import 'package:scriptsense/ui/components/header.dart';
+import '../../model/hive_text_model.dart';
 
-class History extends StatefulWidget {
-  final String history;
-  const History({super.key, this.history = 'default'});
+class History extends ConsumerStatefulWidget {
+  const History({Key? key}) : super(key: key);
 
   @override
-  State<History> createState() => _History();
+  _HistoryState createState() => _HistoryState();
 }
 
-class _History extends State<History> {
-  List<bool> isHeartFilled = List.filled(5, false);
+class _HistoryState extends ConsumerState<History> {
   bool showOnlyFavorites = false;
   bool sortDateAscending = false;
-  bool sortDateDescending = false;
-  String? dropdownValue = 'Meine Favoriten';
+  bool sortDateDescending = true;
 
   @override
   Widget build(BuildContext context) {
+    final hiveList = ref.watch(hiveControllerProvider);
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
-      body: NestedScrollView(
+      body: hiveList.when(
+        loading: () => const Center(child: CircularProgressIndicator()),
+        error: (error, stack) => Text("Error: ${error}"),
+        data: (value) => NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
             const Header(title: 'Historie'),
           ];
         },
         body: Column(
-            children: [
-              Row(
-                children: [
-                  Align(
-                      alignment: Alignment.centerLeft,
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 25.0, top: 15),
-                        child: FilterButton(
-                          onFilterChanged: (bool value) {
-                            setState(() {
-                              showOnlyFavorites = value;
-                              sortDateAscending = value;
-                              sortDateDescending = value;
-                            });
-                          },
-                        ),
-                      )
-                  ),
-                  Spacer(),
-                  InfoButton(infoText: "Behalten Sie den Überblick über Ihre bisherigen Übersetzungen! In der Verlauf-Seite unserer App können Sie jederzeit auf Ihre früher gescannten und übersetzten Texte zugreifen. Einfach und übersichtlich - hier finden Sie all Ihre Übersetzungen an einem Ort gespeichert, damit Sie diese bei Bedarf schnell wiederfinden und nachschlagen können.",),
-                ]
-              ),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: 5,
-                  itemBuilder: (BuildContext context, int index) {
-                    if (showOnlyFavorites && !isHeartFilled[index]) {
-                      return Container();
-                    }
-                        return Center(
-                          child: SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.9,
-                            child: Padding(
-                              padding: const EdgeInsets.only(bottom: 15.0),
-                              child: Card(
-                                child: Padding(
-                                  padding: const EdgeInsets.only(left: 15.0, right: 15.0, bottom: 20.0, top: 10.0),
-                                  child: Column(
-                                    children: [
-                                      Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          '2023-12-31',
-                                          style: TextStyle(color: Colors.grey),
-                                        ),
-                                      ),
-                                      Row(
-                                        children: [
-                                          const Padding(
-                                            padding: EdgeInsets.only(left: 5.0, top: 10.0),
-                                            child: Text('示例文本', style: TextStyle(fontWeight: FontWeight.bold)), // "Beispieltext" (auf chinesisch)
-                                          ),
-                                          const Spacer(),
-                                          Container(
-                                            padding: EdgeInsets.zero,
-                                            child: GestureDetector(
-                                              onTap: () {
-                                                setState(() {
-                                                  isHeartFilled[index] = !isHeartFilled[index];
-                                                });
-                                              },
-                                              child: Icon(
-                                                isHeartFilled[index] ? Icons.favorite : Icons.favorite_border,
-                                                color: isHeartFilled[index] ? Colors.redAccent : Colors.grey,
-                                              ),
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(top: 7.0, bottom: 7.0),
-                                        child: Align(
-                                          alignment: Alignment.centerRight,
-                                          child: SizedBox(
-                                            width: MediaQuery.of(context).size.width * 1,
-                                            child: const Divider(),
-                                          ),
-                                        ),
-                                      ),
-                                      const Row(
-                                        children: [
-                                          Text('Beispieltext'),
-                                          Spacer(),
-                                          Padding(
-                                            padding: EdgeInsets.only(left: 5),
-                                            child: Icon(Icons.delete, color: Colors.grey,)
-                                          )
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        );
+          children: [
+            Row(
+              children: [
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                    padding: EdgeInsets.only(left: screenWidth * 0.065, top: screenHeight * 0.02),
+                    child: FilterButton(
+                      onFavoriteFilterChanged: (bool value) {
+                        setState(() {
+                          showOnlyFavorites = value;
+                        });
                       },
-
+                      onDateAscendingFilterChanged: (bool value) {
+                        setState(() {
+                          sortDateAscending = value;
+                        });
+                      },
+                      onDateDescendingFilterChanged: (bool value) {
+                        setState(() {
+                          sortDateDescending = value;
+                        });
+                      },
+                    ),
+                  ),
+                ),
+                Spacer(),
+                InfoButton(
+                  infoText: "Behalten Sie den Überblick über Ihre bisherigen Übersetzungen! In der Verlauf-Seite unserer App können Sie jederzeit auf Ihre früher gescannten und übersetzten Texte zugreifen. Einfach und übersichtlich - hier finden Sie all Ihre Übersetzungen an einem Ort gespeichert, damit Sie diese bei Bedarf schnell wiederfinden und nachschlagen können.",
+                ),
+              ],
+            ),
+            hiveList.value!.isEmpty
+                ? Center(
+              child: Padding(
+                padding: EdgeInsets.only(top: screenHeight * 0.05),
+                child: FractionallySizedBox(
+                  widthFactor: 0.8,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.history,
+                        size: screenHeight * 0.065,
+                        color: Colors.grey,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: screenHeight * 0.01),
+                        child: Text(
+                          'Noch keine gescannten Übersetzungen',
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: screenHeight * 0.025,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ]
-          )
+            )
+                : Expanded(
+              child: ListView.builder(
+                itemCount: hiveList.value!.values.toList().length,
+                itemBuilder: (BuildContext context, int index) {
+                  if (showOnlyFavorites && !hiveList.value!.values.toList()[index].isFavorite) {
+                    return Container();
+                  }
+                  return Center(
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      child: Padding(
+                        padding: EdgeInsets.only(bottom: screenHeight * 0.015),
+                        child: Card(
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                              left: screenWidth * 0.04,
+                              right: screenWidth * 0.04,
+                              bottom: screenHeight * 0.02,
+                              top: screenHeight * 0.01,
+                            ),
+                            child: Column(
+                              children: [
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    hiveList.value!.values.toList()[index].scanDate,
+                                    style: TextStyle(color: Colors.grey),
+                                  ),
+                                ),
+                                Row(
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(left: screenHeight * 0.01, top: screenHeight * 0.007),
+                                      child: Text(
+                                        hiveList.value!.values.toList()[index].originalText,
+                                        style: TextStyle(fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                    const Spacer(),
+                                    Container(
+                                      padding: EdgeInsets.zero,
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          setState(() {
+                                            var item = hiveList.value!.values.toList()[index];
+                                            var updatedItem = HiveTextModel(
+                                              item.originalText,
+                                              item.translatedText,
+                                              item.scanDate,
+                                              isFavorite: !item.isFavorite,
+                                            );
+                                            hiveList.value!.putAt(index, updatedItem);
+                                          });
+                                        },
+                                        child: Icon(
+                                          hiveList.value!.values.toList()[index].isFavorite ? Icons.favorite : Icons.favorite_border,
+                                          color: hiveList.value!.values.toList()[index].isFavorite ? Colors.redAccent : Colors.grey,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(top: screenHeight * 0.007, bottom: screenHeight * 0.007),
+                                  child: Align(
+                                    alignment: Alignment.centerRight,
+                                    child: SizedBox(
+                                      width: MediaQuery.of(context).size.width,
+                                      child: const Divider(),
+                                    ),
+                                  ),
+                                ),
+                                Row(
+                                  children: [
+                                    Text(hiveList.value!.values.toList()[index].translatedText),
+                                    Spacer(),
+                                    Padding(
+                                      padding: EdgeInsets.only(top: screenHeight * 0.005),
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          setState(() {
+                                            hiveList.value!.deleteAt(index);
+                                          });
+                                        },
+                                        child: Icon(
+                                          Icons.delete,
+                                          color: Colors.grey,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
       ),
       bottomNavigationBar: BottomNavBar(
         selectedIndex: 1,

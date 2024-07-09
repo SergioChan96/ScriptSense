@@ -4,21 +4,37 @@ import 'dart:ui';
 
 import 'package:opencv_dart/opencv_dart.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter/material.dart';
+
 import 'package:scriptsense/model/result_model.dart';
 import 'package:scriptsense/services/segmenter.dart';
 import 'package:scriptsense/ui/pages/result_page.dart';
+
+import '../model/save_model.dart';
 
 part 'result_controller.g.dart';
 
 @riverpod
 class ResultController extends _$ResultController implements IResultController {
   bool AnalysnotStarted = true;
-
+  bool selectAll = false;
+  List<SaveModel> savedItems = [];
   List<bool> saved = [];
+
+  void toggleSelectAll() {
+    selectAll = !selectAll;
+    for (int i = 0; i < saved.length; i++) {
+      saved[i] = selectAll;
+    }
+    state = state.copyWith();
+  }
+
   @override
   ResultModel build() {
     return ResultModel.initial();
   }
+
   @override
   Future<void> startAnalysisofImage(String image) async {
     Mat matImage = convertStringtoImage(image);
@@ -47,9 +63,18 @@ class ResultController extends _$ResultController implements IResultController {
     }
     state = state.copyWith(lines: debug);
   }
+
+
   @override
-  void toggle(int index) {
-     saved[index] = !saved[index];
-     state = state.copyWith(lines: state.lines, identifiedImages: state.identifiedImages);
+  void toggle(int index, String date) {
+    List<Mat> keys = state.identifiedImages.keys.toList();
+    Mat mat = keys[index];
+    String identifiedImage = state.identifiedImages[mat]!;
+
+    SaveModel item = SaveModel(Image.memory(imencode(ImageFormat.jpg.ext, mat)), identifiedImage, date);
+    savedItems.add(item);
+    state = state.copyWith();
+    saved[index] = !saved[index];
+    state = state.copyWith(lines: state.lines, identifiedImages: state.identifiedImages);
   }
 }

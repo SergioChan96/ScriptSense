@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:scriptsense/ui/buttons/info_button.dart';
 import 'package:scriptsense/ui/components/bottom_nav_bar.dart';
 import 'package:scriptsense/ui/components/header.dart';
-
 import '../../services/translation_service.dart';
 
 
@@ -46,6 +45,9 @@ class _Translation extends State<Translation> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       resizeToAvoidBottomInset: true,
       body: CustomScrollView(
@@ -63,21 +65,26 @@ class _Translation extends State<Translation> {
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.8,
                 child: Padding(
-                  padding: const EdgeInsets.only(bottom: 10.0),
+                  padding: EdgeInsets.only(bottom: screenHeight * 0.02),
                   child: Card(
                     child: Padding(
-                      padding: const EdgeInsets.all(20.0),
+                      padding: EdgeInsets.all(screenHeight * 0.03),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           ConstrainedBox(
-                            constraints: const BoxConstraints(minHeight: 150),
+                            constraints: BoxConstraints(minHeight: screenHeight * 0.22),
                             child: TextField(
                               controller: _textController,
                               decoration: InputDecoration(
                                 border: InputBorder.none,
                               ),
                               maxLines: null,
+                              keyboardType: TextInputType.multiline,
+                              textInputAction: TextInputAction.done,
+                              onSubmitted: (value) {
+                                _translate();
+                              },
                             ),
                           ),
                         ],
@@ -86,7 +93,7 @@ class _Translation extends State<Translation> {
                   ),
                 ),
               ),
-              Padding(
+             /* Padding(
                 padding: const EdgeInsets.only(right: 40.0, bottom: 20.0),
                 child:  Row(
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -104,13 +111,13 @@ class _Translation extends State<Translation> {
                     ),
                   ],
                 ),
-              ),
+              ),*/
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Card(
                       child: Padding(
-                          padding: const EdgeInsets.only(left: 10, right: 10, top: 2),
+                          padding: EdgeInsets.only(left: screenWidth * 0.045, right: screenWidth * 0.025, top: screenHeight * 0.000),
                           child: DropdownButtonHideUnderline(
                               child: DropdownButton<String>(
                               value: _sourceLanguage,
@@ -143,13 +150,20 @@ class _Translation extends State<Translation> {
                   ),
 
                   Padding(
-                      padding: const EdgeInsets.only(left: 15, right: 15, top: 2, bottom: 2),
-                      child: ElevatedButton(
+                    padding: EdgeInsets.only(left: screenWidth * 0.03, right: screenWidth * 0.03),
+                    child: ElevatedButton(
                         onPressed: () {
-
+                          setState(() {
+                            String temp = _sourceLanguage;
+                            _sourceLanguage = _targetLanguage;
+                            _targetLanguage = temp;
+                            String tempText = _textController.text;
+                            _textController.text = _translatedText;
+                            _translatedText = tempText;
+                          });
                         },
                          child: const Icon(
-                             Icons.sync_alt, // TO DO: maybe different icon damit für user klar wird von welcher sprache in welche übersetzte wird (idee pfeil von links nach rechts)
+                             Icons.sync_alt,
                              color: Colors.redAccent
                          )
                       ),
@@ -157,9 +171,8 @@ class _Translation extends State<Translation> {
 
                   Card(
                       child: Padding(
-                          padding: const EdgeInsets.only(left: 15, right: 15, top: 2),
-                          child:
-                          DropdownButtonHideUnderline(
+                          padding: EdgeInsets.only(left: screenWidth * 0.045, right: screenWidth * 0.025, top: screenHeight * 0.000),
+                          child: DropdownButtonHideUnderline(
                               child:DropdownButton<String>(
                               value: _targetLanguage,
                               style: TextStyle(
@@ -194,12 +207,12 @@ class _Translation extends State<Translation> {
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.8,
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 20.0),
+                  padding: EdgeInsets.only(top: screenHeight * 0.02),
                   child: Card(
                     child: Padding(
-                      padding: const EdgeInsets.all(20.0),
+                      padding:  EdgeInsets.all(screenHeight * 0.03),
                       child: ConstrainedBox(
-                        constraints: const BoxConstraints(minHeight: 150),
+                        constraints:  BoxConstraints(minHeight: screenHeight * 0.22),
                         child: Text(
                           _translatedText,
                         ),
