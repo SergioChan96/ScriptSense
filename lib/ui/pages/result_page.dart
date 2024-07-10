@@ -51,9 +51,10 @@ class ResultPage extends ConsumerWidget {
                     height: screenHeight * 0.045,
                     child: ElevatedButton(
                       onPressed: () {
-                        resultController.save();
+                        resultController.save().whenComplete(() {
+                          HistoryRoute().go(context);
+                        });
                         // stop the matcher
-                        HistoryRoute().go(context);
                       },
                       child: Text('Speichern', style: TextStyle(color: Colors.redAccent)),
                       style: ElevatedButton.styleFrom(
