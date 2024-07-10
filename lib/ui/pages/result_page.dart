@@ -45,7 +45,7 @@ class ResultPage extends ConsumerWidget {
           Row(
               children: [
                 Padding(
-                  padding: EdgeInsets.only(left: screenWidth * 0.055),
+                  padding: EdgeInsets.only(left: screenWidth * 0.065),
                   child: Container(
                     width: screenWidth * 0.25,
                     height: screenHeight * 0.045,
@@ -64,14 +64,14 @@ class ResultPage extends ConsumerWidget {
                   ),
                 ),
                 Spacer(),
-                ElevatedButton(
-                  onPressed: resultController.toggleSelectAll,
-                  child: Text('Alle auswählen', style: TextStyle(color: Colors.redAccent)),
-                  style: ElevatedButton.styleFrom(
-                    side: BorderSide(color: Colors.transparent),
-                    backgroundColor: Colors.transparent,
-                    shadowColor: Colors.transparent,
-                  ),
+                Padding(
+                  padding: EdgeInsets.only(right: screenWidth * 0.065, top: screenHeight * 0.02),
+                  child: GestureDetector(
+                    onTap: resultController.toggleSelectAll,
+                    child: Text(
+                        resultController.selectAll ? 'Alle entwählen' : 'Alle auswählen',                           style: TextStyle(color: Colors.redAccent)
+                    ),
+                  )
                 ),
               ],
            ),
@@ -79,6 +79,7 @@ class ResultPage extends ConsumerWidget {
               child: resultmodel.lines.isEmpty
                   ? Center(child: CircularProgressIndicator())
                   : ListView.builder(
+                padding: EdgeInsets.only(top: screenHeight * 0.01),
                 itemCount: resultmodel.lines.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Center(
@@ -120,14 +121,15 @@ class ResultPage extends ConsumerWidget {
                                     ),
                                   ],
                                 ),
-                                Row(
+                            Padding(
+                            padding: EdgeInsets.only(top: screenHeight * 0.007),
+                            child: Row(
                                   children: [
-                                    Flexible(
+                                    Expanded(
                                       child:  Container(
-                                        alignment: Alignment.topLeft,
+                                        alignment: Alignment.bottomLeft,
                                           height: screenHeight * 0.03,
                                           child: FractionallySizedBox(
-                                            widthFactor: 1,
                                             heightFactor: 1,
                                             child: Image.memory(
                                                 imencode(ImageFormat.jpg.ext, resultmodel.lines[index]),
@@ -138,6 +140,7 @@ class ResultPage extends ConsumerWidget {
                                     ),
                                     Spacer()
                                   ],
+                                  ),
                                 ),
                                 Padding(
                                   padding: EdgeInsets.only(top: screenHeight * 0.007, bottom: screenHeight * 0.007),

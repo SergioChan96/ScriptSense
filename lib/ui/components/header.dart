@@ -14,17 +14,17 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
       expandedHeight: 0.0,
       floating: false,
       pinned: true,
+      centerTitle: true,
       backgroundColor: Theme.of(context).colorScheme.surfaceContainer,
       iconTheme: IconThemeData(
         color: Colors.redAccent,
       ),
-      title: Center(
-        child: Text(
-          title,
-          style: TextStyle(
-            color: color,
-            fontSize: screenHeight * 0.035,
-          ),
+      title:
+      Text(
+        title,
+        style: TextStyle(
+          color: color,
+          fontSize: screenHeight * 0.035,
         ),
       ),
     );

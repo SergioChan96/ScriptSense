@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:scriptsense/ui/buttons/info_button.dart';
 import 'package:scriptsense/router/typed_routes.dart';
@@ -39,6 +40,10 @@ class _HomePage extends State<HomePage> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        Padding(
+                          padding: EdgeInsets.only(bottom: screenWidth * 0.05, top: screenWidth * 0.02),
+                           child: SvgPicture.asset('assets/Logo.svg', height: screenHeight * 0.2, width: screenHeight * 0.2),
+                        ),
                         Text(
                           "Translate Now.",
                           style: TextStyle(fontSize: screenWidth * 0.07, fontWeight: FontWeight.bold),
