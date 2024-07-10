@@ -11,7 +11,7 @@ import 'package:scriptsense/ui/pages/camera_page.dart';
 part "camera_page_controller.g.dart";
 
 @riverpod
-class CameraPageController extends _$CameraPageController implements ICameraPageController{
+class CameraPageController extends _$CameraPageController implements ICameraPageController {
   late CameraController controller;
   bool initStarted = false;
   @override

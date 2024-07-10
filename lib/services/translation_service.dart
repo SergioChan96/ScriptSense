@@ -1,10 +1,13 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class TranslationService {
+import 'package:scriptsense/services/interfaces/itranslation_service.dart';
+
+class TranslationService implements ITranslationService {
   final String apiUrl = 'https://translation.googleapis.com/language/translate/v2';
   final String apiKey = 'AIzaSyBwHk4DhNOWFMyKVNaCG-iEFOOIBf08Jhw';
 
+  @override
   Future<String> translate(String sourceLanguage, String targetLanguage, String text) async {
     final response = await http.post(
       Uri.parse('$apiUrl?key=$apiKey'),

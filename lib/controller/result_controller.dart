@@ -13,6 +13,8 @@ import 'package:scriptsense/ui/pages/result_page.dart';
 
 import '../model/hive_text_model.dart';
 import '../model/save_model.dart';
+import '../services/interfaces/isegmenter.dart';
+import '../services/interfaces/itranslation_service.dart';
 import '../services/translation_service.dart';
 
 part 'result_controller.g.dart';
@@ -41,7 +43,7 @@ class ResultController extends _$ResultController implements IResultController {
   @override
   Future<void> startAnalysisofImage(String image) async {
     Mat matImage = convertStringtoImage(image);
-    Segmenter seg = Segmenter();
+    ISegmenter seg = Segmenter();
     state = state.copyWith(lines: await seg.segmentImage(matImage));
     saved = List.filled(state.lines.length, false);
     Map<Mat, String> map = Map();
@@ -68,7 +70,7 @@ class ResultController extends _$ResultController implements IResultController {
   }
 
   Future<String> _translate(String result) async {
-    final TranslationService _translationService = TranslationService();
+    final ITranslationService _translationService = TranslationService();
     try {
       final translatedText = await _translationService.translate('zh-CN', 'de', result);
       return translatedText;
