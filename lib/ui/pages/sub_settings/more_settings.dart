@@ -13,6 +13,9 @@ class _MoreSettings extends State<MoreSettings> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       body: NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
@@ -21,18 +24,18 @@ class _MoreSettings extends State<MoreSettings> {
           ];
         },
         body: Padding(
-          padding: const EdgeInsets.only(top: 60.0, left: 20.0, right: 20.0),
+          padding: EdgeInsets.only(top: screenWidth * 0.09, left: screenHeight * 0.02, right: screenHeight * 0.02),
           child: Center (
             child: Column(
               children: [
-                const Padding (
-                  padding: EdgeInsets.only(left: 10.0),
+                Padding (
+                  padding: EdgeInsets.only(left: screenWidth * 0.05),
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
                       "Beispiel Einstellungen",
                       style: TextStyle(
-                        fontSize: 17.0,
+                        fontSize: screenWidth * 0.04,
                       ),
                     ),
                   ),
@@ -40,63 +43,57 @@ class _MoreSettings extends State<MoreSettings> {
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 0.90,
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
+                    padding: EdgeInsets.only(top: screenHeight * 0.01, bottom: screenHeight * 0.01),
                     child: Card(
                       child: Column(
                         children: [
                           Container(
-                            margin: const EdgeInsets.only(top: 5.0),
+                            margin: EdgeInsets.only(top: screenHeight * 0.01),
                             child: TextButton(
                                 onPressed: () {},
-                                child: const Row(
+                                child: Row(
                                   children: [
                                     Padding(
-                                      padding: EdgeInsets.only(left: 5.0),
+                                      padding: EdgeInsets.only(left: screenWidth * 0.015),
                                       child: Text('Beispiel Einstellung 1', style: TextStyle(color: Colors.black)),
                                     ),
                                   ],
                                 )
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 0.0, bottom: 0.0),
-                            child: Align(
-                              alignment: Alignment.center,
-                              child: SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.8,
-                                child: const Divider(),
-                              ),
+                         Align(
+                            alignment: Alignment.center,
+                            child: SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.8,
+                              child: const Divider(),
                             ),
                           ),
                           TextButton(
                               onPressed: () {},
-                              child: const Row(
+                              child: Row(
                                 children: [
                                   Padding(
-                                    padding: EdgeInsets.only(left: 5.0),
+                                    padding: EdgeInsets.only(left: screenWidth * 0.015),
                                     child: Text('Beispiel Einstellung 2', style: TextStyle(color: Colors.black)),
                                   ),
                                 ],
                               )
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 0.0, bottom: 0.0),
-                            child: Align(
-                              alignment: Alignment.center,
-                              child: SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.8,
-                                child: const Divider(),
-                              ),
+                          Align(
+                            alignment: Alignment.center,
+                            child: SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.8,
+                              child: const Divider(),
                             ),
                           ),
                           Container(
-                            margin: const EdgeInsets.only(bottom: 5.0),
+                            margin: EdgeInsets.only(bottom: screenHeight * 0.01),
                             child: TextButton(
                                 onPressed: () {},
-                                child: const Row(
+                                child: Row(
                                   children: [
                                     Padding(
-                                      padding: EdgeInsets.only(left: 5.0),
+                                      padding: EdgeInsets.only(left: screenWidth * 0.015),
                                       child: Text('Beispiel Einstellung 3', style: TextStyle(color: Colors.black)),
                                     ),
                                   ],

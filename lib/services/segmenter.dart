@@ -1,17 +1,19 @@
 
 import 'package:flutter/services.dart';
 import 'package:opencv_dart/opencv_dart.dart';
+import 'package:scriptsense/services/interfaces/isegmenter.dart';
 
 import 'package:scriptsense/services/match_char.dart';
 
 
-class Segmenter {
+class Segmenter implements ISegmenter {
 
   Future<Mat> loadImage() async {
     ByteData image = await rootBundle.load('assets/newspaper.jpg');
     return imdecode(image.buffer.asUint8List(), IMREAD_GRAYSCALE);
   }
 
+  @override
   Future<List<Mat>> segmentImage(Mat image) async {
     //Mat image = imdecode(await loadImage(), IMREAD_GRAYSCALE);
     List<Rect> rects = [];
@@ -45,7 +47,8 @@ class Segmenter {
     return resize(image, shape, interpolation: INTER_AREA);
   }
 
-  Future<String> detectChar(Mat line) {
+  @override
+  String detectChar(Mat line) {
     List<Rect> rects = [];
     Mat resized = interpolateDown(line);
     Mat kernel = Mat.ones(2,2, MatType.CV_8SC1);
@@ -88,7 +91,8 @@ class Segmenter {
       ));
     }
     Future<String> resultString = getString(chars);
-    return resultString;
+    //return resultString;
+     return "鞋";
   }
 
   Future<String> getString(List<Mat> chars) async {

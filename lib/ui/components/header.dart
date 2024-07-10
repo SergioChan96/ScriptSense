@@ -8,17 +8,22 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
+
     return SliverAppBar(
       expandedHeight: 0.0,
       floating: false,
       pinned: true,
       backgroundColor: Theme.of(context).colorScheme.surfaceContainer,
+      iconTheme: IconThemeData(
+        color: Colors.redAccent,
+      ),
       title: Center(
         child: Text(
           title,
-          style: const TextStyle(
+          style: TextStyle(
             color: color,
-            fontSize: 26.0,
+            fontSize: screenHeight * 0.035,
           ),
         ),
       ),
