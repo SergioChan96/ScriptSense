@@ -36,7 +36,16 @@ class CameraPage extends ConsumerWidget {
           iconTheme: IconThemeData(
             color: Colors.white,
           ),
-          actions: [],
+          actions: [
+            IconButton(
+                onPressed: () async {
+                  final image = await loadImage();
+                  cameraPageController.controller.dispose();
+                  ResultRoute(image: base64Encode(image)).go(context);
+                },
+                icon: Icon(Icons.text_snippet_outlined)
+            )
+          ],
         ),
       ),
       body: Column(
@@ -67,12 +76,9 @@ class CameraPage extends ConsumerWidget {
                   IconButton(
                       iconSize: screenHeight * 0.06,
                       onPressed: () async {
-                        final image = await loadImage();
+                        cameraPageController.loadImage();
                         cameraPageController.controller.dispose();
-                        //context.go('/camera/result:$image');
-                        ResultRoute(image: base64Encode(image)).go(context);
-                        //cameraPageController.loadImage();
-                        //ResultRoute(image: base64Encode(cameraPageModel.convertedPic!)).go(context);
+                        ResultRoute(image: base64Encode(cameraPageModel.convertedPic!)).go(context);
                       },
                       icon: Icon(Icons.image)
                   ),

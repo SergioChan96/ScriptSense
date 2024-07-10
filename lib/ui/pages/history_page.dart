@@ -34,7 +34,14 @@ class _HistoryState extends ConsumerState<History> {
       body: hiveList.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (error, stack) => Text("Error: ${error}"),
-        data: (value) => NestedScrollView(
+        data: (value) {
+          var sortedList = value.values.toList();
+          if (sortDateAscending) {
+            sortedList.sort((a, b) => a.scanDate.compareTo(b.scanDate));
+          } else {
+            sortedList.sort((a, b) => b.scanDate.compareTo(a.scanDate));
+          }
+          return NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
             const Header(title: 'Historie'),
@@ -57,11 +64,13 @@ class _HistoryState extends ConsumerState<History> {
                       onDateAscendingFilterChanged: (bool value) {
                         setState(() {
                           sortDateAscending = value;
+                          sortDateAscending = !value;
                         });
                       },
                       onDateDescendingFilterChanged: (bool value) {
                         setState(() {
                           sortDateDescending = value;
+                          sortDateDescending = !value;
                         });
                       },
                     ),
@@ -103,7 +112,9 @@ class _HistoryState extends ConsumerState<History> {
                 ),
               ),
             )
-                : Expanded(
+                :
+
+            Expanded(
               child: ListView.builder(
                 itemCount: hiveList.value!.values.toList().length,
                 itemBuilder: (BuildContext context, int index) {
@@ -207,7 +218,8 @@ class _HistoryState extends ConsumerState<History> {
             ),
           ],
         ),
-      ),
+      );
+        },
       ),
       bottomNavigationBar: BottomNavBar(
         selectedIndex: 1,
