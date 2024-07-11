@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 64 64" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
+    <rect id="Artboard1" x="0" y="0" width="64" height="64" style="fill:none;"/>
+    <g id="Artboard11" serif:id="Artboard1">
+        <g transform="matrix(0.813687,0,0,0.81073,5.98114,9.66686)">
+            <g transform="matrix(0.0318825,0,0,0.0398017,-10.0176,-61.5692)">
+                <ellipse cx="1317.15" cy="2239" rx="595.938" ry="477.367" style="fill:rgb(255,82,82);stroke:rgb(255,82,82);stroke-width:34.16px;"/>
+            </g>
+            <g transform="matrix(0.0275636,0,0,0.0291064,-8.77755,-36.2483)">
+                <text x="924.48px" y="2389.91px" style="font-family:'MS-UIGothic', 'MS UI Gothic', sans-serif;font-size:557.335px;fill:rgb(244,227,227);">数字</text>
+            </g>
+        </g>
+        <g transform="matrix(0.73534,0,0,0.733059,8.63871,8.15117)">
+            <path d="M62.939,16.086C62.939,7.394 55.904,0.336 47.238,0.336" style="fill:none;stroke:rgb(255,82,82);stroke-width:7.32px;"/>
+        </g>
+        <g transform="matrix(0.73534,0,0,0.733059,8.63871,8.15117)">
+            <path d="M47.238,63.569C55.904,63.569 62.939,56.511 62.939,47.819" style="fill:none;stroke:rgb(255,82,82);stroke-width:7.32px;"/>
+        </g>
+        <g transform="matrix(0.73534,0,0,0.733059,8.63871,8.15117)">
+            <path d="M14.988,0.359C6.716,0.802 0.136,7.679 0.136,16.086" style="fill:none;stroke:rgb(255,82,82);stroke-width:7.32px;"/>
+        </g>
+        <g transform="matrix(0.73534,0,0,0.733059,8.63871,8.15117)">
+            <path d="M0.136,47.819C0.136,56.511 7.171,63.569 15.836,63.569" style="fill:none;stroke:rgb(255,82,82);stroke-width:7.32px;"/>
+        </g>
+    </g>
+</svg>
