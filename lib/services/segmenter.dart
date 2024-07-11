@@ -43,7 +43,7 @@ class Segmenter implements ISegmenter {
   }
 
   Mat interpolateDown(Mat image) {
-    Size shape = (image.width~/2, image.height~/2);
+    (int, int) shape = (image.width~/2, image.height~/2);
     return resize(image, shape, interpolation: INTER_AREA);
   }
 
@@ -121,7 +121,7 @@ class Segmenter implements ISegmenter {
   }
   Future<Mat> generatedImage() {
     MatchChar matcher = MatchChar();
-    return matcher.getCharacterImage("例", (100,100));
+    return matcher.getCharacterImage("例", Size(100,100));
   }
 
   Future<(Mat, Mat)> showDetection() async {

@@ -51,7 +51,7 @@ class MatchChar {
       if (counter == 10000) {
         break;
       }
-      Mat template = await getCharacterImage(digitalChar, (char.size[1],char.size[0]));
+      Mat template = await getCharacterImage(digitalChar, Size(char.size[1],char.size[0]));
       Mat cross_correlation = matchTemplate(char, template, TM_CCORR_NORMED);
       (double, double, Point, Point) result = minMaxLoc(cross_correlation);
       if (result.$2 > bestxCorr) {
@@ -64,22 +64,22 @@ class MatchChar {
 
   Future<Mat> getCharacterImage(String char, Size size) async {
     final recorder = ui.PictureRecorder();
-    final canvas = ui.Canvas(recorder, ui.Rect.fromPoints(ui.Offset(0, 0), ui.Offset(size.$1.toDouble(), size.$2.toDouble())));
+    final canvas = ui.Canvas(recorder, ui.Rect.fromPoints(ui.Offset(0, 0), ui.Offset(size.width.toDouble(), size.height.toDouble())));
     final textPainter = TextPainter(
       text: TextSpan(
         text: char,
         style: TextStyle(
           color: Colors.white,
-          fontSize: size.$1.toDouble(),
+          fontSize: size.width.toDouble(),
           fontFamily: 'CustomFont',
         ),
       ),
       textDirection: TextDirection.ltr,
     );
     textPainter.layout();
-    textPainter.paint(canvas, Offset((size.$1 - textPainter.width) / 2, (size.$2 - textPainter.height) / 2));
+    textPainter.paint(canvas, Offset((size.width - textPainter.width) / 2, (size.height - textPainter.height) / 2));
     ui.Picture picture = recorder.endRecording();
-    ui.Image img = await picture.toImage(size.$1, size.$2);
+    ui.Image img = await picture.toImage(size.width, size.height);
     ByteData? byteData = await img.toByteData(format: ui.ImageByteFormat.png);
     Uint8List pngBytes = byteData!.buffer.asUint8List();
     Mat mat = imdecode(pngBytes, IMREAD_GRAYSCALE);
@@ -88,7 +88,7 @@ class MatchChar {
   Future<(Mat, Mat)> debugDetection() async {
     ByteData byteImage = await rootBundle.load('assets/Make_Complete.png');
     Mat image = imdecode(byteImage.buffer.asUint8List(), IMREAD_GRAYSCALE);
-    Mat template = await getCharacterImage("全", (image.size[1], image.size[0]));
+    Mat template = await getCharacterImage("全", Size(image.size[1], image.size[0]));
     print("shape 1:${image.shape}, 2:${template.shape}");
     Mat cross_correlation = matchTemplate(image, template, TM_CCORR_NORMED);
     (double, double, Point, Point) result = minMaxLoc(cross_correlation);
