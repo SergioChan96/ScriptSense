@@ -86,7 +86,6 @@ class CameraPage extends ConsumerWidget {
                   GestureDetector(
                     onTap: () async {
                       cameraPageController.takePicture();
-                      // preview of of picture and route to new page with picture
                     },
                     child: LayoutBuilder(
                       builder: (context, constraints) {
