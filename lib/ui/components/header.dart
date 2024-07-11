@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../router/typed_routes.dart';
+
+
 class Header extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   static const Color color = Colors.redAccent;
@@ -19,6 +22,12 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
       iconTheme: IconThemeData(
         color: Colors.redAccent,
       ),
+      leading: title == 'Resultate' ? IconButton(
+        icon: Icon(Icons.arrow_back),
+        onPressed: () {
+          CameraRoute().go(context);
+        },
+      ) : null,
       title:
       Text(
         title,

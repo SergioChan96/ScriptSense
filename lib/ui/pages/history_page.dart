@@ -61,10 +61,20 @@ class _HistoryState extends ConsumerState<History> {
                               });
                             },
                             onDateAscendingFilterChanged: (bool value) {
-                              hiveController.sortAscending();
-                            },
+                              setState(() {
+                                sortDateAscending = value;
+                                if (sortDateAscending) {
+                                  hiveController.sortAscending();
+                                }
+                              });
+                              },
                             onDateDescendingFilterChanged: (bool value) {
-                              hiveController.sortDescending();
+                              setState(() {
+                                sortDateDescending = value;
+                                if (sortDateDescending) {
+                                  hiveController.sortDescending();
+                                }
+                              });
                             },
                           ),
                         ),
