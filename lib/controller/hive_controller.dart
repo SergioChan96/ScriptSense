@@ -11,30 +11,48 @@ class HiveController extends _$HiveController {
 
   DateFormat format = DateFormat('d/M/y');
 
+  Map<int, int> indexMap = Map();
+
   Box<HiveTextModel>? box;
   @override
-  List<HiveTextModel> build() {
+  List<ModelWrapper> build() {
     return [];
   }
   Future<void> init() async {
     if(box == null) {
       box = await Hive.openBox<HiveTextModel>('scannedTexts');
-      state = box!.values.toList();
+      List<HiveTextModel> tmp = box!.values.toList();
+      List<ModelWrapper> modelList = [];
+      for (int i = 0; i < state.length; i++) {
+        modelList.add(ModelWrapper(i, tmp[i]));
+      }
+      state = modelList;
     }
   }
 
-  Future<void> updateList() async {
-    state = (await Hive.openBox<HiveTextModel>('scannedTexts')).values.toList();
+  void addFavorite(int index, ModelWrapper model) {
+    box?.putAt(model.index, model.model);
+    state[index] = model;
+  }
+
+  void delete(int index, int boxIndex) {
+    box?.deleteAt(boxIndex);
+    state.removeAt(index);
   }
 
   void sortDescending() {
-    state.sort((a, b) =>format.parse(b.scanDate).compareTo(format.parse(a.scanDate)));
+    state.sort((a, b) => format.parse(b.model.scanDate).compareTo(format.parse(a.model.scanDate)));
     state = state;
   }
 
   void sortAscending() {
-    state.sort((a, b) => format.parse(a.scanDate).compareTo(format.parse(b.scanDate)));
+    state.sort((a, b) => format.parse(a.model.scanDate).compareTo(format.parse(b.model.scanDate)));
     state = state;
   }
+}
+class ModelWrapper {
+  int index;
+  HiveTextModel model;
+  ModelWrapper(this.index, this.model);
 }
 
