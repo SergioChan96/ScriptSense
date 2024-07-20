@@ -42,7 +42,7 @@ class _HomePage extends State<HomePage> {
                       children: [
                         Padding(
                           padding: EdgeInsets.only(bottom: screenWidth * 0.05, top: screenWidth * 0.02),
-                           child: SvgPicture.asset('assets/Logo.svg', height: screenHeight * 0.2, width: screenHeight * 0.2),
+                           child: SvgPicture.asset('assets/ScriptSenseIcon.svg', height: screenHeight * 0.2, width: screenHeight * 0.2),
                         ),
                         Text(
                           "Translate Now.",
