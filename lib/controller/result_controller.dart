@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:camera/camera.dart';
 import 'package:hive/hive.dart';
 import 'package:opencv_dart/opencv_dart.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -104,7 +105,7 @@ class ResultController extends _$ResultController implements IResultController {
     List<Mat> keys = state.identifiedImages.keys.toList();
     Mat mat = keys[index];
     String identifiedImage = state.identifiedImages[mat]!;
-    SaveModel item = SaveModel(Image.memory(imencode(ImageFormat.jpg.ext, mat)), identifiedImage, currentDate);
+    SaveModel item = SaveModel(Image.memory(imencode(".jpg", mat)), identifiedImage, currentDate);
     savedItems.add(item);
     state = state.copyWith();
     saved[index] = !saved[index];

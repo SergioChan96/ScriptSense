@@ -70,7 +70,8 @@ class ResultPage extends ConsumerWidget {
                   child: GestureDetector(
                     onTap: resultController.toggleSelectAll,
                     child: Text(
-                        resultController.selectAll ? 'Alle entwählen' : 'Alle auswählen',                           style: TextStyle(color: Colors.redAccent)
+                        resultController.selectAll ? 'Alle entwählen' : 'Alle auswählen',
+                        style: TextStyle(color: Colors.redAccent)
                     ),
                   )
                 ),
@@ -133,7 +134,7 @@ class ResultPage extends ConsumerWidget {
                                           child: FractionallySizedBox(
                                             heightFactor: 1,
                                             child: Image.memory(
-                                                imencode(ImageFormat.jpg.ext, resultmodel.lines[index]),
+                                                imencode(".jpg", resultmodel.lines[index]),
                                                 fit: BoxFit.contain,
                                             ),
                                           ),
