@@ -1,4 +1,5 @@
 
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:scriptsense/controller/camera_page_controller.dart';
@@ -8,6 +9,7 @@ import 'package:scriptsense/ui/pages/camera_page.dart';
 void main() {
   final ICameraPageController camera_controller = ProviderContainer().read(cameraPageControllerProvider.notifier);
   final CameraPageModel model = ProviderContainer().read(cameraPageControllerProvider);
+  WidgetsFlutterBinding.ensureInitialized();
   camera_controller.init();
 
   test("should take new Picture", () {
