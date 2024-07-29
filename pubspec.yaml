@@ -33,7 +33,7 @@ dependencies:
   http: ^0.13.3
   badges: ^2.0.1
   provider: ^6.0.0
-  opencv_dart: ^1.0.8
+  opencv_dart: 1.2.0
   go_router: ^14.1.4
   path_provider: ^2.1.3
   camera: ^0.11.0+1
@@ -62,9 +62,12 @@ dev_dependencies:
   riverpod_generator: ^3.0.0-dev.11
   riverpod_lint: ^3.0.0-dev.4
   hive_generator: ^2.0.1
+  mocktail: ^0.1.4
+  coverage: ^1.8.0
 
   flutter_test:
     sdk: flutter
+
 
 
   # The "flutter_lints" package below contains a set of recommended lints to

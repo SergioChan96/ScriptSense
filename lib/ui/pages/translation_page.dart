@@ -93,25 +93,6 @@ class _Translation extends State<Translation> {
                   ),
                 ),
               ),
-             /* Padding(
-                padding: const EdgeInsets.only(right: 40.0, bottom: 20.0),
-                child:  Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Container(
-                      width: 121,
-                      height: 35,
-                      child: ElevatedButton(
-                        onPressed: _translate,
-                        child: Text('Übersetzen', style: TextStyle(color: Colors.redAccent)),
-                        style: ElevatedButton.styleFrom(
-                          side: BorderSide(color: Colors.redAccent, width: 2),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),*/
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

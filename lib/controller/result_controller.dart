@@ -105,7 +105,7 @@ class ResultController extends _$ResultController implements IResultController {
     List<Mat> keys = state.identifiedImages.keys.toList();
     Mat mat = keys[index];
     String identifiedImage = state.identifiedImages[mat]!;
-    SaveModel item = SaveModel(Image.memory(imencode(".jpg", mat)), identifiedImage, currentDate);
+    SaveModel item = SaveModel(Image.memory(imencode(".jpg", mat) as Uint8List), identifiedImage, currentDate);
     savedItems.add(item);
     state = state.copyWith();
     saved[index] = !saved[index];

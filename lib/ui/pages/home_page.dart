@@ -30,10 +30,7 @@ class _HomePage extends State<HomePage> {
           SliverFillRemaining(
             child: Column (
               children: [
-                InfoButton(infoText: "Mit unserer App wird das Übersetzen "
-                    "chinesischen Textes in Ihre gewünschte Sprache zum Kinderspiel! "
-                    "Alles, was Sie tun müssen, ist auf „Scan starten” zu drücken, "
-                    "Ihre Kamera auf den Text zu richten und unserer App den Rest zu überlassen"),
+                InfoButton(infoText: "Mit unserer App wird das Übersetzen chinesischen Textes in Ihre gewünschte Sprache zum Kinderspiel! Alles, was Sie tun müssen, ist auf „Scan starten” zu drücken, Ihre Kamera auf den Text zu richten und unserer App den Rest zu überlassen"),
                 Center(
                   child: Padding(
                     padding: EdgeInsets.all(screenWidth * 0.1),

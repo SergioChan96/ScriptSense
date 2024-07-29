@@ -1,4 +1,3 @@
-
 import 'package:flutter/services.dart';
 import 'package:opencv_dart/opencv_dart.dart';
 import 'package:scriptsense/services/interfaces/isegmenter.dart';

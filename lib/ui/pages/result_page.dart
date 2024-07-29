@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:opencv_dart/opencv_dart.dart';
@@ -134,7 +136,7 @@ class ResultPage extends ConsumerWidget {
                                           child: FractionallySizedBox(
                                             heightFactor: 1,
                                             child: Image.memory(
-                                                imencode(".jpg", resultmodel.lines[index]),
+                                                imencode(".jpg", resultmodel.lines[index]) as Uint8List,
                                                 fit: BoxFit.contain,
                                             ),
                                           ),
@@ -190,4 +192,6 @@ abstract class IResultController {
   Future<void> debugLines();
   void toggle(int index);
   void save();
+  List<bool> get saved;
+  String get currentDate;
 }

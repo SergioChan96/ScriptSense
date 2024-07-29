@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:opencv_dart/opencv_dart.dart';
 
+
 class MatchChar {
   List<String> validationChar = [];
   /*
