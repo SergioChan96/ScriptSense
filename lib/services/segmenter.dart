@@ -43,12 +43,12 @@ class Segmenter implements ISegmenter {
   }
 
   Mat interpolateDown(Mat image) {
-    Size shape = (image.width~/2, image.height~/2);
+    (int, int) shape = (image.width~/2, image.height~/2);
     return resize(image, shape, interpolation: INTER_AREA);
   }
 
   @override
-  String detectChar(Mat line) {
+  Future<String> detectChar(Mat line) {
     List<Rect> rects = [];
     Mat resized = interpolateDown(line);
     Mat kernel = Mat.ones(2,2, MatType.CV_8SC1);
@@ -91,8 +91,7 @@ class Segmenter implements ISegmenter {
       ));
     }
     Future<String> resultString = getString(chars);
-    //return resultString;
-     return "鞋";
+    return resultString;
   }
 
   Future<String> getString(List<Mat> chars) async {
@@ -121,7 +120,7 @@ class Segmenter implements ISegmenter {
   }
   Future<Mat> generatedImage() {
     MatchChar matcher = MatchChar();
-    return matcher.getCharacterImage("例", (100,100));
+    return matcher.getCharacterImage("例", Size(100,100));
   }
 
   Future<(Mat, Mat)> showDetection() async {
