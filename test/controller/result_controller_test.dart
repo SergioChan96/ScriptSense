@@ -20,12 +20,12 @@ Future<void> main() async {
   
   test("should toggle checkbox", () {
     controller.toggle(0);
-    assert(controller.saved[0]);
+    expect(controller.saved[0], isTrue);
   });
   
   test("should toggel all", () {
     controller.toggleSelectAll();
-    assert(controller.saved[2]);
+    expect(controller.saved[2], isTrue);
   });
   ByteData image = await rootBundle.load('assets/Make_Complete.png');
   var baseImage = base64Encode(image.buffer.asUint8List());
@@ -34,7 +34,7 @@ Future<void> main() async {
   opencv_dart.dll not found not testable
   test("should recognize character", () async {
     await controller.startAnalysisofImage(baseImage);
-    assert(model.identifiedImages[model.lines[0]] != null);
+    expect(model.identifiedImages[model.lines[0]], isNot(null));
   });
 
    */
