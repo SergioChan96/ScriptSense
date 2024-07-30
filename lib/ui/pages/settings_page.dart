@@ -34,7 +34,8 @@ class _Settings extends ConsumerState<Settings> {
             const Header(title: "Einstellungen")
           ];
         },
-        body: Padding(
+        body: SingleChildScrollView(
+        child: Padding(
           padding: EdgeInsets.only(top: screenHeight * 0.06, left: screenWidth * 0.02, right: screenWidth * 0.02),
           child: Center (
             child: Column(
@@ -284,6 +285,7 @@ class _Settings extends ConsumerState<Settings> {
               ],
             ),
           ),
+        ),
         ),
       ),
       bottomNavigationBar: BottomNavBar(

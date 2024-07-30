@@ -78,11 +78,11 @@ class _FilterButtonState extends State<FilterButton> {
               value: 'Datum aufsteigend',
               child: Row(
                 children: [
-                  Icon(Icons.arrow_upward,
+                 Expanded(child:  Icon(Icons.arrow_upward,
                     color: sortDateAscending ? Colors.redAccent : Colors.grey[700],
-                  ),
-                  SizedBox(width: screenWidth * 0.02),
-                  Text('Datum aufsteigend', style: TextStyle(color: Colors.grey[700])),
+                  )),
+                  Expanded(child: SizedBox(width: screenWidth * 0.02)),
+                  Expanded(child: Text('Datum aufsteigend', style: TextStyle(color: Colors.grey[700]))),
                 ],
               ),
             ),
@@ -90,11 +90,11 @@ class _FilterButtonState extends State<FilterButton> {
               value: 'Datum absteigend',
               child: Row(
                 children: [
-                  Icon(Icons.arrow_downward,
+                  Expanded(child: Icon(Icons.arrow_downward,
                     color: sortDateDescending ? Colors.redAccent : Colors.grey[700],
-                  ),
-                  SizedBox(width: screenWidth * 0.02),
-                  Text('Datum absteigend', style: TextStyle(color: Colors.grey[700])),
+                  )),
+                  Expanded(child: SizedBox(width: screenWidth * 0.02)),
+                  Expanded(child: Text('Datum absteigend', style: TextStyle(color: Colors.grey[700]))),
                 ],
               ),
             ),

@@ -11,7 +11,6 @@ import '../buttons/info_button.dart';
 import '../components/header.dart';
 
 
-
 class ResultPage extends ConsumerWidget {
   const ResultPage(this.image, {super.key});
   final String image;

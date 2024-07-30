@@ -41,8 +41,8 @@ void main() {
     expect(find.byType(BottomNavBar), findsOneWidget);
 
     expect(find.byType(Card), findsOneWidget);
-    expect(find.byType(Padding), findsNWidgets(13)); // Adjust according to actual implementation
-    expect(find.byType(SizedBox), findsNWidgets(19)); // Adjust according to actual implementation
+    expect(find.byType(Padding), findsNWidgets(13));
+    expect(find.byType(SizedBox), findsNWidgets(19));
     expect(find.byType(SingleChildScrollView), findsOneWidget);
   });
 }

@@ -28,7 +28,8 @@ class _HomePage extends State<HomePage> {
         slivers: <Widget>[
           Header(title: "ScriptSense"),
           SliverFillRemaining(
-            child: Column (
+            child: SingleChildScrollView(
+              child: Column (
               children: [
                 InfoButton(infoText: "Mit unserer App wird das Übersetzen chinesischen Textes in Ihre gewünschte Sprache zum Kinderspiel! Alles, was Sie tun müssen, ist auf „Scan starten” zu drücken, Ihre Kamera auf den Text zu richten und unserer App den Rest zu überlassen"),
                 Center(
@@ -66,6 +67,7 @@ class _HomePage extends State<HomePage> {
                 ),
               ],
             ),
+          ),
           ),
         ],
       ),
