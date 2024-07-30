@@ -6,7 +6,7 @@ part of 'hive_controller.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$hiveControllerHash() => r'48461b5babde96b15021079b5d422256cfef5903';
+String _$hiveControllerHash() => r'ffc0abb4c449bb6afb6e6951f5e2decd1059cfae';
 
 /// See also [HiveController].
 @ProviderFor(HiveController)

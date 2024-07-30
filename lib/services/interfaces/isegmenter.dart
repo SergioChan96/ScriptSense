@@ -2,5 +2,5 @@
 
 abstract class ISegmenter {
    Future<List<Mat>> segmentImage(Mat image);
-   String detectChar(Mat line);
+   Future<String> detectChar(Mat line);
  }

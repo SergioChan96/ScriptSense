@@ -47,7 +47,7 @@ class Segmenter implements ISegmenter {
   }
 
   @override
-  String detectChar(Mat line) {
+  Future<String> detectChar(Mat line) {
     List<Rect> rects = [];
     Mat resized = interpolateDown(line);
     Mat kernel = Mat.ones(2,2, MatType.CV_8SC1);
@@ -90,8 +90,7 @@ class Segmenter implements ISegmenter {
       ));
     }
     Future<String> resultString = getString(chars);
-    //return resultString;
-     return "鞋";
+    return resultString;
   }
 
   Future<String> getString(List<Mat> chars) async {
