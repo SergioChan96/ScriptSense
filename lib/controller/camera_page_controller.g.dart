@@ -7,7 +7,7 @@ part of 'camera_page_controller.dart';
 // **************************************************************************
 
 String _$cameraPageControllerHash() =>
-    r'33e16121e03bc8acd4f7ef4965c83accb9281106';
+    r'f94c7b1d1f562a2aec1da720bf569d2706c14059';
 
 /// See also [CameraPageController].
 @ProviderFor(CameraPageController)

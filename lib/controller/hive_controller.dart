@@ -38,6 +38,7 @@ class HiveController extends _$HiveController {
   void delete(int index, int boxIndex) {
     box?.deleteAt(boxIndex);
     state.removeAt(index);
+    state = state;
   }
 
   void sortDescending() {
