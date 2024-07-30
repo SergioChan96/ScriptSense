@@ -23,7 +23,7 @@ class HiveController extends _$HiveController {
       box = await Hive.openBox<HiveTextModel>('scannedTexts');
       List<HiveTextModel> tmp = box!.values.toList();
       List<ModelWrapper> modelList = [];
-      for (int i = 0; i < state.length; i++) {
+      for (int i = 0; i < tmp.length; i++) {
         modelList.add(ModelWrapper(i, tmp[i]));
       }
       state = modelList;
