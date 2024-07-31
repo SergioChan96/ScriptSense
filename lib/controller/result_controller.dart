@@ -86,7 +86,6 @@ class ResultController extends _$ResultController implements IResultController {
   Future<void> save() async {
     final box = Hive.box<HiveTextModel>('scannedTexts');
     Iterable<Mat> mats = state.identifiedImages.keys;
-    final exampleHiveTextModel = HiveTextModel("lol", "xD", "31/12/2023"); //for testing the date sorting filter
     for (int i = 0; i < saved.length; i++) {
       if (saved[i]) {
         print("index: $i, Text: ${state.identifiedImages[mats.elementAt(i)]!}");
@@ -95,10 +94,8 @@ class ResultController extends _$ResultController implements IResultController {
         final hiveTextModel = HiveTextModel(originalText, translatedText, currentDate);
         box.add(hiveTextModel);
       }
-      box.add(exampleHiveTextModel);
     }
   }
-
 
   @override
   void toggle(int index) {
