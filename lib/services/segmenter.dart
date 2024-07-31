@@ -56,7 +56,7 @@ class Segmenter implements ISegmenter {
     (VecVecPoint, Mat) contoursR = findContours(result.$2, RETR_TREE, CHAIN_APPROX_SIMPLE);
     VecVecPoint contours = contoursR.$1;
     if(contours.isEmpty) {
-      //return Future<String>();
+      return "";
     }
     for (VecPoint contour in contours) {
       Rect r = boundingRect(contour);
