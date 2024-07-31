@@ -1,4 +1,6 @@
 
+import 'dart:isolate';
+
 import 'package:flutter/services.dart';
 import 'package:opencv_dart/opencv_dart.dart';
 import 'package:scriptsense/services/interfaces/isegmenter.dart';
@@ -8,6 +10,7 @@ import 'package:scriptsense/services/match_char.dart';
 
 class Segmenter implements ISegmenter {
 
+  MatchChar tmpMatcher = MatchChar();
   Future<Mat> loadImage() async {
     ByteData image = await rootBundle.load('assets/newspaper.jpg');
     return imdecode(image.buffer.asUint8List(), IMREAD_GRAYSCALE);
@@ -90,6 +93,7 @@ class Segmenter implements ISegmenter {
           )
       ));
     }
+    //Future<String> resultString = processImages(chars);
     Future<String> resultString = getString(chars);
     return resultString;
   }
@@ -118,6 +122,52 @@ class Segmenter implements ISegmenter {
     return result;
      */
   }
+
+  Future<String> processImages(List<Mat> images) async {
+    final futures = <Future<Result>>[];
+    await tmpMatcher.loadDict();
+    for (int i = 0; i < images.length; i++) {
+      futures.add(processImage(imencode(".png", images[i]), i));
+    }
+
+    // Wait for all futures to complete
+    final results = await Future.wait(futures);
+
+    // Sort results by index and combine into a single string
+    results.sort((a, b) => a.index.compareTo(b.index));
+    return results.map((r) => r.character).join();
+  }
+
+  Future<Result> processImage(Uint8List char, int index) async {
+    final response = ReceivePort();
+    await Isolate.spawn(_processIsolate, response.sendPort);
+
+    final sendPort = await response.first as SendPort;
+    final answerPort = ReceivePort();
+    sendPort.send([char, index, answerPort.sendPort]);
+
+    return await answerPort.first as Result;
+  }
+
+  void _processIsolate(SendPort sendPort) {
+    final port = ReceivePort();
+    sendPort.send(port.sendPort);
+
+    port.listen((message) async {
+      final char = message[0] as Uint8List;
+      final index = message[1] as int;
+      final replyPort = message[2] as SendPort;
+
+      // Simulate image processing and return a character
+      final character = await processImageToCharacter(char);
+      replyPort.send(Result(character, index));
+    });
+  }
+
+  Future<String> processImageToCharacter(Uint8List image) async {
+    return await tmpMatcher.match(imdecode(image, IMREAD_GRAYSCALE));
+  }
+
   Future<Mat> generatedImage() {
     MatchChar matcher = MatchChar();
     return matcher.getCharacterImage("例", Size(100,100));
@@ -169,4 +219,10 @@ class Segmenter implements ISegmenter {
     }
     return line;
   }
+}
+class Result {
+  final String character;
+  final int index;
+
+  Result(this.character, this.index);
 }

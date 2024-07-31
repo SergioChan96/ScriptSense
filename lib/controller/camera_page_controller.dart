@@ -57,7 +57,9 @@ class CameraPageController extends _$CameraPageController implements ICameraPage
 
   @override
   Future<void> saveImage() async {
-    await Gal.putImageBytes(await state.picture!.readAsBytes());
+    if(save) {
+      await Gal.putImageBytes(await state.picture!.readAsBytes());
+    }
   }
 
   @override
