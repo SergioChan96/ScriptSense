@@ -1,9 +1,5 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hive/hive.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:scriptsense/controller/hive_controller.dart';
 
 import 'package:scriptsense/ui/buttons/info_button.dart';
@@ -13,7 +9,7 @@ import 'package:scriptsense/ui/components/header.dart';
 import '../../model/hive_text_model.dart';
 
 class History extends ConsumerStatefulWidget {
-  const History({Key? key}) : super(key: key);
+  const History({super.key});
 
   @override
   _HistoryState createState() => _HistoryState();

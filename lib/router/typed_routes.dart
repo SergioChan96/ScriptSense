@@ -1,5 +1,3 @@
-
-import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -15,6 +13,7 @@ import 'package:scriptsense/ui/pages/sub_settings/more_settings.dart';
 import 'package:scriptsense/ui/pages/sub_settings/impressum.dart';
 
 part 'typed_routes.g.dart';
+
 
 @TypedGoRoute<HomeRoute>(
   path: '/',

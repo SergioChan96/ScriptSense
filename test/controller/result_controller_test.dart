@@ -1,20 +1,17 @@
-
-import 'dart:convert';
-
-import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_test/hive_test.dart';
+
 import 'package:scriptsense/controller/result_controller.dart';
 import 'package:scriptsense/model/hive_text_model.dart';
-import 'package:scriptsense/model/result_model.dart';
-import 'package:scriptsense/ui/pages/result_page.dart';
+//import 'package:scriptsense/model/result_model.dart';
+
 
 Future<void> main() async {
   late ResultController controller;
-  late ResultModel model;
+ // late ResultModel model;
   late ProviderContainer container;
   Hive.registerAdapter(HiveTextModelAdapter());
 
@@ -24,7 +21,7 @@ Future<void> main() async {
     WidgetsFlutterBinding.ensureInitialized();
     container = ProviderContainer();
     controller = container.read(resultControllerProvider.notifier);
-    model = container.read(resultControllerProvider);
+   // model = container.read(resultControllerProvider);
     controller.saved = [false, false, false, false];
   });
 

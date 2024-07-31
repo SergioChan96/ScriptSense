@@ -1,4 +1,3 @@
-import 'dart:typed_data';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
@@ -135,7 +134,7 @@ class ResultPage extends ConsumerWidget {
                                           child: FractionallySizedBox(
                                             heightFactor: 1,
                                             child: Image.memory(
-                                                imencode(".jpg", resultmodel.lines[index]) as Uint8List,
+                                                imencode(".jpg", resultmodel.lines[index]),
                                                 fit: BoxFit.contain,
                                             ),
                                           ),

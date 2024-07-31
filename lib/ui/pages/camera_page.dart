@@ -3,18 +3,16 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:camera/camera.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:flutter/services.dart';
 
 import 'package:scriptsense/controller/camera_page_controller.dart';
 import 'package:scriptsense/router/typed_routes.dart';
 
+
 class CameraPage extends ConsumerWidget {
   const CameraPage({super.key});
-
 
   Future<Uint8List> loadImage() async {
     ByteData image = await rootBundle.load('assets/newspaper.jpg');

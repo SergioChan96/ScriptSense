@@ -5,12 +5,11 @@ class CustomCheckbox extends StatelessWidget {
   final bool value;
   final ValueChanged<bool?>? onChanged;
 
-  const CustomCheckbox({Key? key, required this.value, required this.onChanged}) : super(key: key);
+  const CustomCheckbox({super.key, required this.value, required this.onChanged});
 
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
 
     return InkWell(
       onTap: () {

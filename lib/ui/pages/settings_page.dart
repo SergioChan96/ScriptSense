@@ -7,12 +7,11 @@ import 'package:scriptsense/ui/components/header.dart';
 import 'package:scriptsense/ui/components/bottom_nav_bar.dart';
 import 'package:scriptsense/services/theme_provider.dart';
 import 'package:scriptsense/router/typed_routes.dart';
-import '../../controller/result_controller.dart';
 import '../../model/hive_text_model.dart';
 
 
 class Settings extends ConsumerStatefulWidget {
-  const Settings({Key? key}) : super(key: key);
+  const Settings({super.key});
 
   @override
   _Settings createState() => _Settings();
@@ -21,7 +20,6 @@ class Settings extends ConsumerStatefulWidget {
 class _Settings extends ConsumerState<Settings> {
   @override
   Widget build(BuildContext context) {
-    final resultController = ref.watch(resultControllerProvider.notifier);
     final themeProvider = provider.Provider.of<ThemeProvider>(context);
     bool isDarkMode = themeProvider.themeMode == ThemeMode.dark;
     double screenWidth = MediaQuery.of(context).size.width;
@@ -240,7 +238,7 @@ class _Settings extends ConsumerState<Settings> {
                             margin: EdgeInsets.only(top: screenHeight * 0.005),
                             child: TextButton(
                                 onPressed: () {
-                                  showDialog(
+                                  showDialog<AlertDialog>(
                                     context: context,
                                     builder: (BuildContext context) {
                                       return AlertDialog(

@@ -4,22 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:opencv_dart/opencv_dart.dart';
 
-
 class MatchChar {
   List<String> validationChar = [];
-  /*
-  static Future<MatchChar> init() async{
-    print("loading json");
-    String data = await rootBundle.loadString("assets/dictionary.txt");
-    print("loading successful");
-    final jsonResult = jsonDecode(data); //latest Dart
-    print(jsonResult);
-    for(var entry in jsonResult) {
-      print("object in dict ${entry.runtimeType}");
-    }
-    return MatchChar._();
-  }
-   */
+
   Future<void> loadDict() async {
     String data = await rootBundle.loadString("assets/dictionary.txt");
     List<String> entrys = data.trim().split("\n");
@@ -53,8 +40,8 @@ class MatchChar {
         break;
       }
       Mat template = await getCharacterImage(digitalChar, Size(char.size[1],char.size[0]));
-      Mat cross_correlation = matchTemplate(char, template, TM_CCORR_NORMED);
-      (double, double, Point, Point) result = minMaxLoc(cross_correlation);
+      Mat crossCorrelation = matchTemplate(char, template, TM_CCORR_NORMED);
+      (double, double, Point, Point) result = minMaxLoc(crossCorrelation);
       if (result.$2 > bestxCorr) {
         bestChar = digitalChar;
         bestxCorr = result.$2;
@@ -91,8 +78,8 @@ class MatchChar {
     Mat image = imdecode(byteImage.buffer.asUint8List(), IMREAD_GRAYSCALE);
     Mat template = await getCharacterImage("全", Size(image.size[1], image.size[0]));
     print("shape 1:${image.shape}, 2:${template.shape}");
-    Mat cross_correlation = matchTemplate(image, template, TM_CCORR_NORMED);
-    (double, double, Point, Point) result = minMaxLoc(cross_correlation);
+    Mat crossCorrelation = matchTemplate(image, template, TM_CCORR_NORMED);
+    (double, double, Point, Point) result = minMaxLoc(crossCorrelation);
     print("crosscorrelation: ${result.$2}");
     return (template, image);
   }

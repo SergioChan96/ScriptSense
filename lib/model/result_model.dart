@@ -12,6 +12,6 @@ class ResultModel with _$ResultModel {
 
   factory ResultModel.initial() => ResultModel(
     lines: [],
-    identifiedImages: Map(),
+    identifiedImages: <Mat, String>{},
   );
 }

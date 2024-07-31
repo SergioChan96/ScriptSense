@@ -55,13 +55,15 @@ class _MoreSettings extends State<MoreSettings> {
                                   children: [
                                     Padding(
                                       padding: EdgeInsets.only(left: screenWidth * 0.015),
-                                      child: Text('Beispiel Einstellung 1', style: TextStyle(color: Colors.black)),
+                                      child: Text('Beispiel Einstellung 1', style: TextStyle(
+                                        color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black,
+                                      )),
                                     ),
                                   ],
                                 )
                             ),
                           ),
-                         Align(
+                          Align(
                             alignment: Alignment.center,
                             child: SizedBox(
                               width: MediaQuery.of(context).size.width * 0.8,
@@ -74,7 +76,9 @@ class _MoreSettings extends State<MoreSettings> {
                                 children: [
                                   Padding(
                                     padding: EdgeInsets.only(left: screenWidth * 0.015),
-                                    child: Text('Beispiel Einstellung 2', style: TextStyle(color: Colors.black)),
+                                    child: Text('Beispiel Einstellung 2', style: TextStyle(
+                                      color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black,
+                                    )),
                                   ),
                                 ],
                               )
@@ -94,7 +98,9 @@ class _MoreSettings extends State<MoreSettings> {
                                   children: [
                                     Padding(
                                       padding: EdgeInsets.only(left: screenWidth * 0.015),
-                                      child: Text('Beispiel Einstellung 3', style: TextStyle(color: Colors.black)),
+                                      child: Text('Beispiel Einstellung 3', style: TextStyle(
+                                        color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black,
+                                      )),
                                     ),
                                   ],
                                 )

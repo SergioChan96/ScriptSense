@@ -14,7 +14,6 @@ class Segmenter implements ISegmenter {
 
   @override
   Future<List<Mat>> segmentImage(Mat image) async {
-    //Mat image = imdecode(await loadImage(), IMREAD_GRAYSCALE);
     List<Rect> rects = [];
     Mat resized = interpolateDown(image);
     Mat kernel = Mat.ones(1, 6, MatType.CV_8SC1);
@@ -47,7 +46,7 @@ class Segmenter implements ISegmenter {
   }
 
   @override
-  Future<String> detectChar(Mat line) {
+  String detectChar(Mat line) {
     List<Rect> rects = [];
     Mat resized = interpolateDown(line);
     Mat kernel = Mat.ones(2,2, MatType.CV_8SC1);
@@ -89,8 +88,9 @@ class Segmenter implements ISegmenter {
           )
       ));
     }
-    Future<String> resultString = getString(chars);
-    return resultString;
+    // Future<String> resultString = getString(chars);
+   // return resultString;
+    return "鞋";
   }
 
   Future<String> getString(List<Mat> chars) async {
@@ -103,19 +103,6 @@ class Segmenter implements ISegmenter {
     }
     print(sentence);
     return sentence;
-    /*
-    SendPort sendPort = SendPort();
-    List<ReceivePort> futures = [];
-    for (int i = 0; i < chars.length; i++) {
-      futures.add(ReceivePort());
-      Isolate.spawn(matcher.match(chars[i]), futures[i].sendPort)
-    }
-    String result = "";
-    for (ReceivePort future in futures) {
-      result += future.take(0) as String;
-    }
-    return result;
-     */
   }
   Future<Mat> generatedImage() {
     MatchChar matcher = MatchChar();
@@ -146,24 +133,6 @@ class Segmenter implements ISegmenter {
       line = rectangle(line, Rect(x,y,w,h), Scalar.black);
       if (w > 10 && h > 10) {
         rects.add(Rect(x,y,w,h));
-      }
-    }
-    return line;
-    List<Mat> chars = [];
-    for (Rect rect in rects) {
-      if (rect.width == line.width && rect.height == line.height) {
-        continue;
-      }
-
-      line = rectangle(line, rect, Scalar.red, thickness: 2);
-      if (rect.height > rect.width * 2 || rect.width > rect.height * 2) {
-        print("rect: ${rect.width}, ${rect.width}");
-        print("Character is too big new method needed");
-        continue;
-      }
-      if (rect.height < 10 || rect.width < 10) {
-        print("Character is too small new method needed");
-        continue;
       }
     }
     return line;

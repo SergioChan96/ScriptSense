@@ -1,7 +1,6 @@
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:scriptsense/model/hive_text_model.dart';
 
 part 'hive_controller.g.dart';
@@ -11,7 +10,7 @@ class HiveController extends _$HiveController {
 
   DateFormat format = DateFormat('d/M/y');
 
-  Map<int, int> indexMap = Map();
+  Map<int, int> indexMap = {};
 
   Box<HiveTextModel>? box;
   @override

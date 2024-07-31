@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:camera/camera.dart';
 import 'package:hive/hive.dart';
 import 'package:opencv_dart/opencv_dart.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -25,7 +24,9 @@ class ResultController extends _$ResultController implements IResultController {
   bool AnalysnotStarted = true;
   bool selectAll = false;
   List<SaveModel> savedItems = [];
+  @override
   List<bool> saved = [];
+  @override
   final String currentDate = DateFormat('d/M/y').format(DateTime.now());
 
   void toggleSelectAll() {
@@ -47,9 +48,9 @@ class ResultController extends _$ResultController implements IResultController {
     ISegmenter seg = Segmenter();
     state = state.copyWith(lines: await seg.segmentImage(matImage));
     saved = List.filled(state.lines.length, false);
-    Map<Mat, String> map = Map();
+    Map<Mat, String> map = {};
     for (Mat mat in state.lines) {
-      map[mat] = await seg.detectChar(mat);
+      map[mat] = seg.detectChar(mat);
       state = state.copyWith(identifiedImages: map);
     }
   }
@@ -71,9 +72,9 @@ class ResultController extends _$ResultController implements IResultController {
   }
 
   Future<String> _translate(String result) async {
-    final ITranslationService _translationService = TranslationService();
+    final ITranslationService translationService = TranslationService();
     try {
-      final translatedText = await _translationService.translate('zh-CN', 'de', result);
+      final translatedText = await translationService.translate('zh-CN', 'de', result);
       return translatedText;
     } catch (e, s) {
       print('Failed to translate text: $e');
@@ -102,7 +103,7 @@ class ResultController extends _$ResultController implements IResultController {
     List<Mat> keys = state.identifiedImages.keys.toList();
     Mat mat = keys[index];
     String identifiedImage = state.identifiedImages[mat]!;
-    SaveModel item = SaveModel(Image.memory(imencode(".jpg", mat) as Uint8List), identifiedImage, currentDate);
+    SaveModel item = SaveModel(Image.memory(imencode(".jpg", mat)), identifiedImage, currentDate);
     savedItems.add(item);
     state = state.copyWith();
     saved[index] = !saved[index];

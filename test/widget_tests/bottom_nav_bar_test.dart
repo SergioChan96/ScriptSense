@@ -11,7 +11,7 @@ import 'package:scriptsense/ui/pages/translation_page.dart';
 
 class MockNavigatorObserver extends Mock implements NavigatorObserver {}
 
-class FakeRoute extends Fake implements Route {}
+class FakeRoute extends Fake implements Route<dynamic> {}
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
