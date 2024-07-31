@@ -4,6 +4,7 @@
 
 1. [Abstract](#abstract)
 2. [Detailed Description](#detailed-description)
+3. [Release](#Release)
 3. [Short Description of each Screen](#short-description-of-screens)
 4. [Architecture Description](#architecture-description)
 
@@ -24,6 +25,9 @@ Understanding and translating Chinese characters can be daunting, especially for
 • **Translation History:** A comprehensive history feature tracks all scans and translations, allowing users to sort and filter their past translations for easy reference.
 • **Manual Translation:** Users can manually input text and select the desired language for translation, providing flexibility for translating specific phrases or sentences.
 • **Settings and Customization:** The app includes various settings, such as switching to dark mode, managing user data, and accessing tips and tricks for optimal usage.
+
+## Release
+Apk is available [here](https://github.com/SergioChan96/ScriptSense/releases/tag/1.0)
 
 ## Short Description of each Screen
 <img src="./assets/Short_Screen_Description.png" alt="Short Screen Description" width="600"/>
